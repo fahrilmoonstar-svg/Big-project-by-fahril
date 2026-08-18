@@ -1,0 +1,2614 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fahril Project - Big Showcase</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Segoe+UI:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* ================================================================
+           RESET & GLOBAL STYLES (CSS VARIABLES)
+           ================================================================ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* Warna Utama */
+            --color-primary: #a855f7;
+            --color-secondary: #ff6ba0;
+            --color-accent: #4fc3f7;
+
+            /* Warna Teks */
+            --color-text: #e0e0e0;
+            --color-text-muted: #a0a0c0;
+            --color-text-dark: #1a1a2e;
+
+            /* Warna Background */
+            --color-bg: #0a0a1a;
+            --color-bg-card: rgba(255, 255, 255, 0.05);
+            --color-bg-input: rgba(0, 0, 0, 0.3);
+
+            /* Border */
+            --color-border: rgba(255, 255, 255, 0.08);
+            --color-border-hover: rgba(168, 85, 247, 0.3);
+
+            /* Font */
+            --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            --font-size-base: 16px;
+            --font-weight-normal: 400;
+            --font-weight-medium: 500;
+            --font-weight-semibold: 600;
+            --font-weight-bold: 700;
+            --font-weight-extrabold: 800;
+
+            /* Spacing */
+            --spacing-xs: 4px;
+            --spacing-sm: 8px;
+            --spacing-md: 16px;
+            --spacing-lg: 24px;
+            --spacing-xl: 32px;
+            --spacing-2xl: 48px;
+
+            /* Border Radius */
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --radius-xl: 20px;
+            --radius-2xl: 24px;
+            --radius-full: 9999px;
+
+            /* Shadow */
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.2);
+            --shadow-md: 0 8px 30px rgba(0, 0, 0, 0.3);
+            --shadow-lg: 0 20px 60px rgba(0, 0, 0, 0.5);
+            --shadow-xl: 0 30px 80px rgba(0, 0, 0, 0.8);
+
+            /* Transisi */
+            --transition-fast: 0.2s ease;
+            --transition-base: 0.3s ease;
+            --transition-slow: 0.5s ease;
+        }
+
+        body {
+            font-family: var(--font-family);
+            font-size: var(--font-size-base);
+            font-weight: var(--font-weight-normal);
+            font-optical-sizing: auto;
+            font-style: normal;
+            background: var(--color-bg);
+            color: var(--color-text);
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeLegibility;
+            transition: background 0.5s ease;
+        }
+
+        /* ===== SCROLLBAR ===== */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--color-bg);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--color-primary);
+            border-radius: var(--radius-full);
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--color-secondary);
+        }
+
+        /* ===== SELECTION ===== */
+        ::selection {
+            background: var(--color-primary);
+            color: #fff;
+        }
+
+        /* ================================================================
+           CONTAINER
+           ================================================================ */
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-xl);
+        }
+
+        /* ================================================================
+           NAVIGASI UTAMA
+           ================================================================ */
+        .main-nav {
+            background: var(--color-bg-card);
+            backdrop-filter: blur(12px);
+            border-radius: var(--radius-xl);
+            padding: 15px 25px;
+            border: 1px solid var(--color-border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            position: sticky;
+            top: 10px;
+            z-index: 100;
+        }
+
+        .main-nav .logo {
+            font-size: 20px;
+            font-weight: var(--font-weight-extrabold);
+            background: linear-gradient(135deg, var(--color-secondary), var(--color-primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .main-nav .nav-links {
+            display: flex;
+            gap: var(--spacing-md);
+            flex-wrap: wrap;
+            list-style: none;
+        }
+
+        .main-nav .nav-links a {
+            color: var(--color-text-muted);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: var(--font-weight-semibold);
+            padding: 6px 14px;
+            border-radius: var(--radius-full);
+            transition: var(--transition-fast);
+        }
+
+        .main-nav .nav-links a:hover,
+        .main-nav .nav-links a.active {
+            background: rgba(168, 85, 247, 0.15);
+            color: #fff;
+        }
+
+        .main-nav .nav-links a.cta {
+            background: linear-gradient(135deg, var(--color-secondary), var(--color-primary));
+            color: #fff;
+        }
+
+        .main-nav .nav-links a.cta:hover {
+            transform: scale(1.05);
+        }
+
+        /* ================================================================
+           HERO SECTION
+           ================================================================ */
+        .hero {
+            background: var(--color-bg-card);
+            backdrop-filter: blur(12px);
+            border-radius: var(--radius-2xl);
+            padding: 50px 30px;
+            text-align: center;
+            border: 1px solid var(--color-border);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: var(--font-weight-extrabold);
+            margin: 0;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            background: linear-gradient(135deg, var(--color-secondary), var(--color-primary), var(--color-accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero h2 {
+            font-size: 1.5rem;
+            margin: 15px 0 0 0;
+            letter-spacing: 15px;
+            font-weight: var(--font-weight-light);
+            opacity: 0.95;
+            color: var(--color-text);
+            text-shadow: 0 0 20px rgba(255, 107, 160, 0.3);
+        }
+
+        .hero .subtitle {
+            font-size: 1.1rem;
+            letter-spacing: 3px;
+            font-weight: var(--font-weight-light);
+            color: var(--color-text-muted);
+            margin-top: 15px;
+            opacity: 0.8;
+        }
+
+        .btn-cta {
+            display: inline-block;
+            margin-top: var(--spacing-xl);
+            padding: 14px 40px;
+            background: linear-gradient(135deg, var(--color-secondary), var(--color-primary));
+            color: #fff;
+            font-size: 1rem;
+            font-weight: var(--font-weight-bold);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border: none;
+            border-radius: var(--radius-full);
+            cursor: pointer;
+            text-decoration: none;
+            transition: var(--transition-base);
+            box-shadow: 0 4px 30px rgba(255, 107, 160, 0.3);
+        }
+
+        .btn-cta:hover {
+            transform: translateY(-4px) scale(1.03);
+            box-shadow: 0 8px 40px rgba(255, 107, 160, 0.5);
+        }
+
+        /* ================================================================
+           SECTION CARD
+           ================================================================ */
+        .section-card {
+            background: var(--color-bg-card);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-xl);
+            padding: var(--spacing-xl);
+            transition: var(--transition-base);
+            cursor: default;
+        }
+
+        .section-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--color-border-hover);
+            box-shadow: 0 8px 30px rgba(168, 85, 247, 0.15);
+        }
+
+        .section-card h2 {
+            font-size: 24px;
+            font-weight: var(--font-weight-bold);
+            margin-bottom: var(--spacing-sm);
+            background: linear-gradient(135deg, var(--color-secondary), var(--color-primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .section-card p {
+            color: var(--color-text-muted);
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        /* ================================================================
+           ABOUT SECTION
+           ================================================================ */
+        .about-box {
+            background: var(--color-bg-card);
+            backdrop-filter: blur(12px);
+            border-radius: var(--radius-xl);
+            padding: var(--spacing-xl);
+            border: 1px solid var(--color-border);
+        }
+
+        .about-box h2 {
+            font-size: 24px;
+            font-weight: var(--font-weight-bold);
+            text-align: center;
+            margin-bottom: 5px;
+            background: linear-gradient(135deg, var(--color-secondary), var(--color-primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .about-box .sub {
+            text-align: center;
+            color: var(--color-text-muted);
+            font-size: 14px;
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .about-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .about-list li {
+            padding: 18px 20px;
+            margin-bottom: var(--spacing-md);
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: var(--radius-lg);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            transition: var(--transition-base);
+            cursor: default;
+        }
+
+        .about-list li:hover {
+            transform: translateX(4px);
+            border-color: var(--color-border-hover);
+            background: rgba(168, 85, 247, 0.05);
+        }
+
+        .about-list li strong {
+            display: block;
+            font-size: 18px;
+            color: var(--color-secondary);
+            margin-bottom: 6px;
+        }
+
+        .about-list li span {
+            font-size: 15px;
+            color: var(--color-text-muted);
+            line-height: 1.6;
+        }
+
+        /* ================================================================
+           SLIDER EMOJI
+           ================================================================ */
+        .emoji-box {
+            background: var(--color-bg-card);
+            backdrop-filter: blur(12px);
+            border-radius: var(--radius-xl);
+            padding: var(--spacing-xl);
+            text-align: center;
+            border: 1px solid var(--color-border);
+        }
+
+        .emoji-box h2 {
+            font-size: 20px;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, var(--color-secondary), var(--color-primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        #emoji {
+            font-size: 80px;
+            margin: 10px 0;
+            transition: transform var(--transition-fast);
+        }
+
+        #status {
+            font-size: 18px;
+            font-weight: var(--font-weight-semibold);
+            color: var(--color-text);
+            margin-bottom: 15px;
+            min-height: 30px;
+        }
+
+        input[type="range"] {
+            width: 100%;
+            height: 6px;
+            -webkit-appearance: none;
+            appearance: none;
+            background: linear-gradient(90deg, #ff6b6b, #feca57, #4ade80, #54a0ff, var(--color-primary));
+            border-radius: 10px;
+            outline: none;
+            cursor: pointer;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: #fff;
+            cursor: pointer;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+        }
+
+        .mood-stats {
+            margin-top: 15px;
+            font-size: 14px;
+            color: var(--color-text-muted);
+        }
+
+        .mood-stats span {
+            color: var(--color-secondary);
+            font-weight: var(--font-weight-semibold);
+        }
+
+        /* ================================================================
+           CANVAS DRAW
+           ================================================================ */
+        .draw-box {
+            background: var(--color-bg-card);
+            backdrop-filter: blur(12px);
+            border-radius: var(--radius-xl);
+            padding: var(--spacing-xl);
+            text-align: center;
+            border: 1px solid var(--color-border);
+        }
+
+        .draw-box h2 {
+            font-size: 20px;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, var(--color-secondary), var(--color-primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        #drawCanvas {
+            display: block;
+            width: 100%;
+            max-width: 500px;
+            height: auto;
+            aspect-ratio: 1/1;
+            background: #1a1a2e;
+            border-radius: var(--radius-lg);
+            border: 2px solid var(--color-border);
+            cursor: crosshair;
+            touch-action: none;
+            margin: 0 auto;
+        }
+
+        .draw-controls {
+            margin-top: 15px;
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .draw-controls button {
+            padding: 10px 24px;
+            border: none;
+            border-radius: var(--radius-full);
+            font-weight: var(--font-weight-bold);
+            font-size: 14px;
+            cursor: pointer;
+            transition: var(--transition-base);
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--color-text);
+            border: 1px solid var(--color-border);
+        }
+
+        .draw-controls button:hover {
+            background: var(--color-primary);
+            color: #fff;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(168, 85, 247, 0.3);
+        }
+
+        .download-btn {
+            background: #4ade80 !important;
+            color: #1a1a2e !important;
+        }
+
+        .download-btn:hover {
+            background: #22c55e !important;
+        }
+
+        /* ================================================================
+           FORM REGISTRASI
+           ================================================================ */
+        .register-box {
+            background: var(--color-bg-card);
+            backdrop-filter: blur(12px);
+            border-radius: var(--radius-xl);
+            padding: var(--spacing-xl);
+            border: 1px solid var(--color-border);
+        }
+
+        .register-box h2 {
+            font-size: 20px;
+            margin-bottom: 5px;
+            background: linear-gradient(135deg, var(--color-secondary), var(--color-primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-align: center;
+        }
+
+        .register-box .sub {
+            text-align: center;
+            color: var(--color-text-muted);
+            font-size: 14px;
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .form-group {
+            margin-bottom: var(--spacing-md);
+        }
+
+        .form-group label {
+            display: block;
+            color: var(--color-text-muted);
+            font-size: 14px;
+            font-weight: var(--font-weight-semibold);
+            margin-bottom: 5px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid var(--color-border);
+            border-radius: var(--radius-md);
+            background: var(--color-bg-input);
+            color: var(--color-text);
+            font-size: 15px;
+            transition: var(--transition-base);
+            outline: none;
+            font-family: inherit;
+        }
+
+        .form-group input:focus {
+            border-color: var(--color-primary);
+            box-shadow: 0 0 20px rgba(168, 85, 247, 0.15);
+        }
+
+        .form-group input.error {
+            border-color: #ff6b6b;
+            box-shadow: 0 0 20px rgba(255, 107, 107, 0.15);
+        }
+
+        .form-group input.success {
+            border-color: #4ade80;
+            box-shadow: 0 0 20px rgba(74, 222, 128, 0.15);
+        }
+
+        .form-group .error-msg {
+            color: #ff6b6b;
+            font-size: 12px;
+            margin-top: 4px;
+            display: none;
+        }
+
+        .form-group .error-msg.show {
+            display: block;
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, var(--color-secondary), var(--color-primary));
+            border: none;
+            border-radius: var(--radius-full);
+            color: #fff;
+            font-size: 16px;
+            font-weight: var(--font-weight-bold);
+            cursor: pointer;
+            transition: var(--transition-base);
+            font-family: inherit;
+            margin-top: 5px;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(168, 85, 247, 0.3);
+        }
+
+        /* ================================================================
+           TO-DO LIST PRO
+           ================================================================ */
+        .todo-box {
+            background: var(--color-bg-card);
+            backdrop-filter: blur(12px);
+            border-radius: var(--radius-xl);
+            padding: var(--spacing-xl);
+            border: 1px solid var(--color-border);
+        }
+
+        .todo-box h2 {
+            font-size: 20px;
+            margin-bottom: 5px;
+            background: linear-gradient(135deg, var(--color-secondary), var(--color-primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-align: center;
+        }
+
+        .todo-box .sub {
+            text-align: center;
+            color: var(--color-text-muted);
+            font-size: 14px;
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .todo-input-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: var(--spacing-lg);
+            flex-wrap: wrap;
+        }
+
+        .todo-input-group input {
+            flex: 1;
+            padding: 12px 16px;
+            border: 2px solid var(--color-border);
+            border-radius: var(--radius-md);
+            background: var(--color-bg-input);
+            color: var(--color-text);
+            font-size: 15px;
+            outline: none;
+            font-family: inherit;
+            min-width: 150px;
+        }
+
+        .todo-input-group input:focus {
+            border-color: var(--color-primary);
+            box-shadow: 0 0 20px rgba(168, 85, 247, 0.15);
+        }
+
+        .todo-input-group select {
+            padding: 12px 16px;
+            border: 2px solid var(--color-border);
+            border-radius: var(--radius-md);
+            background: var(--color-bg-input);
+            color: var(--color-text);
+            font-size: 15px;
+            outline: none;
+            font-family: inherit;
+        }
+
+        .todo-input-group button {
+            padding: 12px 24px;
+            background: linear-gradient(135deg, var(--color-secondary), var(--color-primary));
+            border: none;
+            border-radius: var(--radius-md);
+            color: #fff;
+            font-weight: var(--font-weight-bold);
+            cursor: pointer;
+            transition: var(--transition-base);
+        }
+
+        .todo-input-group button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(168, 85, 247, 0.3);
+        }
+
+        .todo-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .todo-list li {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 16px;
+            margin-bottom: 8px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: var(--radius-md);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            transition: var(--transition-base);
+        }
+
+        .todo-list li:hover {
+            border-color: var(--color-border-hover);
+            background: rgba(168, 85, 247, 0.05);
+        }
+
+        .todo-list li .todo-text {
+            flex: 1;
+            font-size: 15px;
+        }
+
+        .todo-list li .todo-text.done {
+            text-decoration: line-through;
+            color: #666;
+        }
+
+        .todo-list li .priority {
+            font-size: 12px;
+            font-weight: var(--font-weight-semibold);
+            padding: 2px 10px;
+            border-radius: var(--radius-full);
+        }
+
+        .priority-high {
+            background: #ff6b6b;
+            color: #1a1a2e;
+        }
+
+        .priority-normal {
+            background: #fbbf24;
+            color: #1a1a2e;
+        }
+
+        .todo-list li .delete-btn {
+            background: none;
+            border: none;
+            color: #ff6b6b;
+            cursor: pointer;
+            font-size: 18px;
+            transition: var(--transition-base);
+        }
+
+        .todo-list li .delete-btn:hover {
+            transform: scale(1.2);
+        }
+
+        .todo-list li input[type="checkbox"] {
+            accent-color: var(--color-primary);
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        .todo-empty {
+            text-align: center;
+            color: #666;
+            padding: 20px;
+        }
+
+        /* ================================================================
+           SIGN UP FORM
+           ================================================================ */
+        .signup-box {
+            background: var(--color-bg-card);
+            backdrop-filter: blur(12px);
+            border-radius: var(--radius-xl);
+            padding: var(--spacing-xl);
+            border: 1px solid var(--color-border);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .signup-box .orb-inner {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(60px);
+            opacity: 0.3;
+            z-index: 0;
+        }
+
+        .signup-box .orb-inner-1 {
+            width: 150px;
+            height: 150px;
+            background: var(--color-secondary);
+            top: -40px;
+            left: -40px;
+            animation: orbFloat 6s ease-in-out infinite alternate;
+        }
+
+        .signup-box .orb-inner-2 {
+            width: 180px;
+            height: 180px;
+            background: var(--color-primary);
+            bottom: -50px;
+            right: -50px;
+            animation: orbFloat 8s ease-in-out infinite alternate-reverse;
+        }
+
+        @keyframes orbFloat {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(30px, 20px) scale(1.2); }
+        }
+
+        .signup-box .form-card {
+            position: relative;
+            z-index: 1;
+        }
+
+        .signup-box h2 {
+            font-size: 22px;
+            font-weight: var(--font-weight-bold);
+            text-align: center;
+            margin-bottom: 5px;
+            background: linear-gradient(135deg, var(--color-secondary), var(--color-primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .signup-box .subtitle {
+            text-align: center;
+            color: var(--color-text-muted);
+            font-size: 14px;
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .signup-box .row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .signup-box .input-group {
+            margin-bottom: var(--spacing-md);
+        }
+
+        .signup-box .input-group label {
+            display: block;
+            color: var(--color-text-muted);
+            font-size: 13px;
+            font-weight: var(--font-weight-semibold);
+            margin-bottom: 5px;
+        }
+
+        .signup-box .input-group input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid var(--color-border);
+            border-radius: var(--radius-md);
+            background: var(--color-bg-input);
+            color: var(--color-text);
+            font-size: 15px;
+            transition: var(--transition-base);
+            outline: none;
+            font-family: inherit;
+        }
+
+        .signup-box .input-group input:focus {
+            border-color: var(--color-primary);
+            box-shadow: 0 0 20px rgba(168, 85, 247, 0.15);
+        }
+
+        .signup-box .input-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .signup-box .btn-signup {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, var(--color-secondary), var(--color-primary));
+            border: none;
+            border-radius: var(--radius-full);
+            color: #fff;
+            font-size: 16px;
+            font-weight: var(--font-weight-bold);
+            cursor: pointer;
+            transition: var(--transition-base);
+            font-family: inherit;
+            margin-top: 5px;
+        }
+
+        .signup-box .btn-signup:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(168, 85, 247, 0.3);
+        }
+
+        .signup-box .form-footer {
+            text-align: center;
+            color: #666;
+            font-size: 13px;
+            margin-top: 18px;
+        }
+
+        .signup-box .form-footer a {
+            color: var(--color-primary);
+            text-decoration: none;
+            font-weight: var(--font-weight-semibold);
+        }
+
+        /* ================================================================
+           ORDENAN PROJECT
+           ================================================================ */
+        .ordenan-box {
+            background: var(--color-bg-card);
+            backdrop-filter: blur(12px);
+            border-radius: var(--radius-xl);
+            padding: 40px 35px;
+            border: 1px solid var(--color-border);
+        }
+
+        .ordenan-box .ordenan-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .ordenan-box .ordenan-header h2 {
+            font-size: 24px;
+            font-weight: var(--font-weight-bold);
+            background: linear-gradient(135deg, var(--color-secondary), var(--color-primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .ordenan-box .ordenan-header .badge-ordenan {
+            background: rgba(168, 85, 247, 0.15);
+            border: 1px solid rgba(168, 85, 247, 0.3);
+            border-radius: var(--radius-full);
+            padding: 4px 16px;
+            font-size: 12px;
+            font-weight: var(--font-weight-semibold);
+            color: var(--color-primary);
+        }
+
+        .ordenan-grid {
+            display: grid;
+            grid-template-columns: 1.3fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .ordenan-text {
+            text-align: left;
+        }
+
+        .ordenan-text h3 {
+            font-size: 2rem;
+            font-weight: var(--font-weight-extrabold);
+            line-height: 1.2;
+            margin-bottom: 12px;
+            background: linear-gradient(135deg, #ffffff 30%, var(--color-primary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .ordenan-text .desc {
+            font-size: 0.95rem;
+            color: var(--color-text-muted);
+            line-height: 1.8;
+            margin-bottom: 18px;
+        }
+
+        .ordenan-text .desc span {
+            color: var(--color-secondary);
+            font-weight: var(--font-weight-semibold);
+        }
+
+        .ordenan-skills {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .ordenan-skills .skill {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-full);
+            padding: 4px 16px;
+            font-size: 13px;
+            font-weight: var(--font-weight-medium);
+            color: var(--color-text-muted);
+            transition: var(--transition-base);
+        }
+
+        .ordenan-skills .skill:hover {
+            border-color: var(--color-border-hover);
+            background: rgba(168, 85, 247, 0.05);
+        }
+
+        .ordenan-buttons {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .ordenan-buttons .btn-primary {
+            padding: 12px 28px;
+            background: linear-gradient(135deg, var(--color-secondary), var(--color-primary));
+            border: none;
+            border-radius: var(--radius-full);
+            color: #fff;
+            font-weight: var(--font-weight-bold);
+            font-size: 14px;
+            cursor: pointer;
+            transition: var(--transition-base);
+            font-family: inherit;
+        }
+
+        .ordenan-buttons .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(168, 85, 247, 0.3);
+        }
+
+        .ordenan-buttons .btn-secondary {
+            padding: 12px 28px;
+            background: transparent;
+            border: 2px solid rgba(255, 255, 255, 0.15);
+            border-radius: var(--radius-full);
+            color: var(--color-text);
+            font-weight: var(--font-weight-bold);
+            font-size: 14px;
+            cursor: pointer;
+            transition: var(--transition-base);
+            font-family: inherit;
+        }
+
+        .ordenan-buttons .btn-secondary:hover {
+            border-color: var(--color-secondary);
+            color: var(--color-secondary);
+        }
+
+        .ordenan-image {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .ordenan-image .avatar {
+            width: 100%;
+            max-width: 280px;
+            aspect-ratio: 1/1;
+            border-radius: var(--radius-2xl);
+            background: linear-gradient(135deg, rgba(255, 107, 160, 0.15), rgba(168, 85, 247, 0.15));
+            border: 2px solid var(--color-border);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 70px;
+            color: var(--color-primary);
+        }
+
+        .ordenan-image .avatar .label {
+            font-size: 13px;
+            color: #666;
+            margin-top: 8px;
+            font-weight: var(--font-weight-medium);
+        }
+
+        .ordenan-bio {
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 1px solid var(--color-border);
+            font-size: 14px;
+            color: var(--color-text-muted);
+            line-height: 1.8;
+            text-align: left;
+        }
+
+        .ordenan-bio strong {
+            color: var(--color-secondary);
+        }
+
+        /* ================================================================
+           HELLO WORLD
+           ================================================================ */
+        .hello-box {
+            background: var(--color-bg-card);
+            backdrop-filter: blur(12px);
+            border-radius: var(--radius-xl);
+            padding: 35px;
+            border: 1px solid var(--color-border);
+            text-align: center;
+            transition: var(--transition-base);
+        }
+
+        .hello-box:hover {
+            border-color: var(--color-border-hover);
+        }
+
+        .hello-box .hello-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .hello-box .hello-header h2 {
+            font-size: 22px;
+            font-weight: var(--font-weight-bold);
+            background: linear-gradient(135deg, var(--color-secondary), var(--color-primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hello-box .hello-header .badge-hello {
+            background: rgba(255, 107, 160, 0.15);
+            border: 1px solid rgba(255, 107, 160, 0.3);
+            border-radius: var(--radius-full);
+            padding: 4px 16px;
+            font-size: 12px;
+            font-weight: var(--font-weight-semibold);
+            color: var(--color-secondary);
+        }
+
+        .hello-image {
+            width: 150px;
+            height: 150px;
+            margin: 0 auto 15px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 4px solid var(--color-border);
+            box-shadow: 0 0 30px rgba(168, 85, 247, 0.1);
+            transition: var(--transition-base);
+        }
+
+        .hello-image:hover {
+            border-color: var(--color-primary);
+            box-shadow: 0 0 50px rgba(168, 85, 247, 0.25);
+            transform: scale(1.04);
+        }
+
+        .hello-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .hello-box h3 {
+            font-size: 2.5rem;
+            font-weight: var(--font-weight-extrabold);
+            margin-bottom: 4px;
+            background: linear-gradient(135deg, var(--color-secondary), var(--color-primary), var(--color-accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hello-box .hello-sub {
+            font-size: 13px;
+            color: var(--color-text-muted);
+            letter-spacing: 2px;
+            margin-bottom: 18px;
+        }
+
+        .hello-buttons {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .hello-buttons .btn {
+            padding: 10px 24px;
+            border: none;
+            border-radius: var(--radius-full);
+            font-weight: var(--font-weight-bold);
+            font-size: 13px;
+            cursor: pointer;
+            transition: var(--transition-base);
+            font-family: inherit;
+        }
+
+        .hello-buttons .btn-hello-primary {
+            background: linear-gradient(135deg, var(--color-secondary), var(--color-primary));
+            color: #fff;
+            box-shadow: 0 4px 20px rgba(168, 85, 247, 0.2);
+        }
+
+        .hello-buttons .btn-hello-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(168, 85, 247, 0.4);
+        }
+
+        .hello-buttons .btn-hello-secondary {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--color-text);
+            border: 2px solid var(--color-border);
+        }
+
+        .hello-buttons .btn-hello-secondary:hover {
+            border-color: var(--color-secondary);
+            color: var(--color-secondary);
+        }
+
+        .hello-counter {
+            margin-top: 18px;
+            padding-top: 15px;
+            border-top: 1px solid var(--color-border);
+            font-size: 14px;
+            color: var(--color-text-muted);
+        }
+
+        .hello-counter span {
+            font-size: 28px;
+            font-weight: var(--font-weight-extrabold);
+            color: var(--color-secondary);
+        }
+
+        .hello-counter .btn-reset {
+            margin-top: 8px;
+            padding: 6px 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-full);
+            color: var(--color-text);
+            font-weight: var(--font-weight-semibold);
+            cursor: pointer;
+            transition: var(--transition-base);
+            font-family: inherit;
+            font-size: 13px;
+        }
+
+        .hello-counter .btn-reset:hover {
+            background: var(--color-primary);
+            color: #fff;
+            border-color: var(--color-primary);
+        }
+
+        /* ================================================================
+           LUXURY PROPERTY CARD
+           ================================================================ */
+        .property-box {
+            background: var(--color-bg-card);
+            backdrop-filter: blur(12px);
+            border-radius: var(--radius-xl);
+            padding: 30px 25px;
+            border: 1px solid var(--color-border);
+            transition: var(--transition-base);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .property-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--color-secondary), var(--color-primary), var(--color-accent));
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .property-box:hover::before {
+            opacity: 1;
+        }
+
+        .property-box:hover {
+            transform: translateY(-6px);
+            border-color: var(--color-border-hover);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .property-box .property-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .property-box .property-header h2 {
+            font-size: 20px;
+            font-weight: var(--font-weight-bold);
+            background: linear-gradient(135deg, var(--color-secondary), var(--color-primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .property-box .property-header .badge-prop {
+            background: linear-gradient(135deg, var(--color-secondary), var(--color-primary));
+            padding: 4px 14px;
+            border-radius: var(--radius-full);
+            font-size: 11px;
+            font-weight: var(--font-weight-bold);
+            color: #fff;
+            letter-spacing: 1px;
+        }
+
+        .property-box .specs-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 18px;
+        }
+
+        .property-box .spec-item {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: var(--radius-lg);
+            padding: 14px 10px;
+            text-align: center;
+            border: 1px solid var(--color-border);
+            transition: var(--transition-base);
+        }
+
+        .property-box .spec-item:hover {
+            border-color: var(--color-border-hover);
+            background: rgba(168, 85, 247, 0.05);
+        }
+
+        .property-box .spec-value {
+            font-size: 24px;
+            font-weight: var(--font-weight-extrabold);
+            background: linear-gradient(135deg, var(--color-secondary), var(--color-primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.2;
+        }
+
+        .property-box .spec-label {
+            font-size: 12px;
+            color: var(--color-text-muted);
+            font-weight: var(--font-weight-medium);
+            margin-top: 2px;
+        }
+
+        .property-box .amenities-title {
+            font-size: 14px;
+            font-weight: var(--font-weight-bold);
+            color: var(--color-text-muted);
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+
+        .property-box .amenity-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 18px;
+        }
+
+        .property-box .amenity-tag {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-full);
+            padding: 6px 16px;
+            font-size: 12px;
+            font-weight: var(--font-weight-medium);
+            color: var(--color-text-muted);
+            transition: var(--transition-base);
+            cursor: default;
+        }
+
+        .property-box .amenity-tag:hover {
+            border-color: var(--color-border-hover);
+            background: rgba(168, 85, 247, 0.08);
+            color: #fff;
+            transform: translateY(-2px);
+        }
+
+        .property-box .amenity-tag i {
+            margin-right: 6px;
+            color: var(--color-secondary);
+        }
+
+        .property-box .agent-row {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 14px 16px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--color-border);
+            transition: var(--transition-base);
+        }
+
+        .property-box .agent-row:hover {
+            border-color: rgba(168, 85, 247, 0.2);
+            background: rgba(168, 85, 247, 0.03);
+        }
+
+        .property-box .agent-photo {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--color-secondary), var(--color-primary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            color: #fff;
+            font-weight: var(--font-weight-bold);
+            flex-shrink: 0;
+        }
+
+        .property-box .agent-info {
+            flex: 1;
+        }
+
+        .property-box .agent-info h5 {
+            font-size: 16px;
+            font-weight: var(--font-weight-bold);
+            color: var(--color-text);
+            margin-bottom: 2px;
+        }
+
+        .property-box .agent-info p {
+            font-size: 12px;
+            color: var(--color-text-muted);
+        }
+
+        .property-box .contact-btn {
+            padding: 8px 20px;
+            background: linear-gradient(135deg, var(--color-secondary), var(--color-primary));
+            border: none;
+            border-radius: var(--radius-full);
+            color: #fff;
+            font-weight: var(--font-weight-bold);
+            font-size: 13px;
+            cursor: pointer;
+            transition: var(--transition-base);
+            font-family: inherit;
+            white-space: nowrap;
+        }
+
+        .property-box .contact-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 30px rgba(168, 85, 247, 0.4);
+        }
+
+        /* ================================================================
+           TEAM FEEDBACK
+           ================================================================ */
+        .feedback-box {
+            background: var(--color-bg-card);
+            backdrop-filter: blur(12px);
+            border-radius: var(--radius-xl);
+            padding: 30px 25px;
+            border: 1px solid var(--color-border);
+            transition: var(--transition-base);
+        }
+
+        .feedback-box:hover {
+            transform: translateY(-4px);
+            border-color: var(--color-border-hover);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .feedback-box .feedback-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .feedback-box .feedback-header h2 {
+            font-size: 20px;
+            font-weight: var(--font-weight-bold);
+            background: linear-gradient(135deg, var(--color-secondary), var(--color-primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .feedback-box .feedback-header .badge-fb {
+            background: rgba(255, 107, 160, 0.15);
+            border: 1px solid rgba(255, 107, 160, 0.3);
+            border-radius: var(--radius-full);
+            padding: 4px 14px;
+            font-size: 11px;
+            font-weight: var(--font-weight-semibold);
+            color: var(--color-secondary);
+        }
+
+        .feedback-box .rate-item {
+            margin-bottom: 16px;
+            padding: 14px 16px;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--color-border);
+            transition: var(--transition-base);
+        }
+
+        .feedback-box .rate-item:hover {
+            border-color: rgba(168, 85, 247, 0.15);
+            background: rgba(168, 85, 247, 0.03);
+        }
+
+        .feedback-box .rate-item .label {
+            font-size: 14px;
+            font-weight: var(--font-weight-semibold);
+            color: var(--color-text);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 6px;
+        }
+
+        .feedback-box .rate-item .label span {
+            font-size: 12px;
+            font-weight: var(--font-weight-normal);
+            color: #888;
+        }
+
+        .feedback-box .rate-item .stars {
+            display: flex;
+            gap: 4px;
+        }
+
+        .feedback-box .rate-item .stars span {
+            font-size: 26px;
+            cursor: pointer;
+            color: #444;
+            transition: var(--transition-base);
+            user-select: none;
+        }
+
+        .feedback-box .rate-item .stars span:hover {
+            transform: scale(1.15);
+            color: #fbbf24;
+        }
+
+        .feedback-box .rate-item .stars span.active {
+            color: #fbbf24;
+            text-shadow: 0 0 20px rgba(251, 191, 36, 0.3);
+        }
+
+        .feedback-box .rate-item .stars span.active~span {
+            color: #444;
+        }
+
+        .feedback-box .ta-label {
+            display: block;
+            font-size: 13px;
+            font-weight: var(--font-weight-semibold);
+            color: var(--color-text-muted);
+            margin: 18px 0 6px;
+        }
+
+        .feedback-box textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid var(--color-border);
+            border-radius: var(--radius-md);
+            background: var(--color-bg-input);
+            color: var(--color-text);
+            font-size: 14px;
+            font-family: inherit;
+            outline: none;
+            transition: var(--transition-base);
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .feedback-box textarea:focus {
+            border-color: var(--color-primary);
+            box-shadow: 0 0 20px rgba(168, 85, 247, 0.1);
+        }
+
+        .feedback-box textarea::placeholder {
+            color: #666;
+        }
+
+        .feedback-box .btn-submit-feedback {
+            width: 100%;
+            padding: 12px;
+            margin-top: 16px;
+            background: linear-gradient(135deg, var(--color-secondary), var(--color-primary));
+            border: none;
+            border-radius: var(--radius-full);
+            color: #fff;
+            font-size: 15px;
+            font-weight: var(--font-weight-bold);
+            cursor: pointer;
+            transition: var(--transition-base);
+            font-family: inherit;
+        }
+
+        .feedback-box .btn-submit-feedback:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(168, 85, 247, 0.4);
+        }
+
+        /* ================================================================
+           TOAST NOTIFIKASI
+           ================================================================ */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            padding: 16px 24px;
+            border-radius: var(--radius-lg);
+            color: #fff;
+            font-weight: var(--font-weight-semibold);
+            z-index: 999;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: var(--transition-base);
+            pointer-events: none;
+            max-width: 350px;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .toast.success {
+            background: #22c55e;
+        }
+
+        .toast.error {
+            background: #ef4444;
+        }
+
+        .toast.info {
+            background: #3b82f6;
+        }
+
+        /* ================================================================
+           FOOTER
+           ================================================================ */
+        .footer {
+            text-align: center;
+            color: #555;
+            font-size: 12px;
+            padding: 10px;
+            border-top: 1px solid var(--color-border);
+        }
+
+        /* ================================================================
+           RESPONSIVE
+           ================================================================ */
+        @media (max-width: 900px) {
+            .ordenan-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            .ordenan-text h3 {
+                font-size: 1.8rem;
+            }
+            .ordenan-image .avatar {
+                max-width: 200px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+                letter-spacing: 2px;
+            }
+            .hero h2 {
+                font-size: 1rem;
+                letter-spacing: 0.5rem;
+            }
+            .hero .subtitle {
+                font-size: 0.9rem;
+            }
+            .btn-cta {
+                padding: 12px 28px;
+                font-size: 0.9rem;
+            }
+            .todo-input-group {
+                flex-direction: column;
+            }
+            .signup-box .row {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
+            .main-nav {
+                flex-direction: column;
+                align-items: stretch;
+                text-align: center;
+            }
+            .main-nav .nav-links {
+                justify-content: center;
+            }
+            .ordenan-box {
+                padding: 25px 20px;
+            }
+            .ordenan-text h3 {
+                font-size: 1.5rem;
+            }
+            .hello-box h3 {
+                font-size: 2rem;
+            }
+            .hello-image {
+                width: 120px;
+                height: 120px;
+            }
+            .property-box .specs-grid {
+                grid-template-columns: 1fr 1fr 1fr;
+                gap: 8px;
+            }
+            .property-box .spec-item {
+                padding: 10px 6px;
+            }
+            .property-box .spec-value {
+                font-size: 20px;
+            }
+            .property-box .agent-row {
+                flex-wrap: wrap;
+                justify-content: center;
+                text-align: center;
+            }
+            .property-box .agent-info {
+                flex: 1 1 100%;
+                text-align: center;
+            }
+            .property-box .contact-btn {
+                width: 100%;
+                text-align: center;
+            }
+            .feedback-box .rate-item .label {
+                font-size: 13px;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 4px;
+            }
+            .feedback-box .rate-item .stars span {
+                font-size: 22px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            .hero h2 {
+                font-size: 0.8rem;
+            }
+            #emoji {
+                font-size: 60px;
+            }
+            .ordenan-buttons {
+                flex-direction: column;
+                width: 100%;
+            }
+            .ordenan-buttons .btn-primary,
+            .ordenan-buttons .btn-secondary {
+                width: 100%;
+                text-align: center;
+            }
+            .hello-buttons {
+                flex-direction: column;
+                width: 100%;
+            }
+            .hello-buttons .btn {
+                width: 100%;
+                text-align: center;
+            }
+            .property-box .specs-grid {
+                grid-template-columns: 1fr 1fr 1fr;
+                gap: 6px;
+            }
+            .feedback-box {
+                padding: 20px 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+        <!-- ============================================================
+        NAVIGASI UTAMA
+        ============================================================ -->
+        <nav class="main-nav">
+            <div class="logo">🚀 FAHRIL PROJECT</div>
+            <ul class="nav-links">
+                <li><a href="#" class="active">Home</a></li>
+                <li><a href="#ordenan">Ordenan</a></li>
+                <li><a href="#hello">Hello</a></li>
+                <li><a href="#property">Property</a></li>
+                <li><a href="#feedback">Feedback</a></li>
+                <li><a href="#todo">To-Do</a></li>
+                <li><a href="#register">Register</a></li>
+                <li><a href="#signup">Sign Up</a></li>
+                <li><a href="#" class="cta" onclick="showToast('📩 Hubungi kami di kontak yang tersedia!', 'info')">Contact</a></li>
+            </ul>
+        </nav>
+
+        <!-- ============================================================
+        HERO SECTION
+        ============================================================ -->
+        <div class="hero" id="home">
+            <h1>Selamat Datang</h1>
+            <h2>DI DUNIA KREATIF</h2>
+            <p class="subtitle">Bersama FAHRIL PROJECT, wujudkan ide-ide terbaikmu</p>
+            <button class="btn-cta" onclick="showToast('🚀 Selamat datang di FAHRIL PROJECT!', 'success')">Mulai Sekarang →</button>
+        </div>
+
+        <!-- ============================================================
+        ABOUT SECTION
+        ============================================================ -->
+        <div class="about-box">
+            <h2>💎 Why Choose Us</h2>
+            <p class="sub">Kami hadir dengan pendekatan yang berbeda untuk membantu bisnis Anda tumbuh.</p>
+
+            <ul class="about-list">
+                <li>
+                    <strong>📊 Strategy</strong>
+                    <span>Data-driven insights engineered to identify untapped revenue streams and mitigate strategic risk.</span>
+                </li>
+                <li>
+                    <strong>⚡ Agile Execution</strong>
+                    <span>Seamless deployment protocols that ensure key initiatives are delivered on time and within budget.</span>
+                </li>
+                <li>
+                    <strong>🛡️ Uncompromising Integrity</strong>
+                    <span>Objective, independent advice focused purely on measurable client success.</span>
+                </li>
+            </ul>
+        </div>
+
+        <!-- ============================================================
+        HOME / CONTACT
+        ============================================================ -->
+        <div class="section-card">
+            <h2>🏠 Home</h2>
+            <p>Welcome to my website</p>
+        </div>
+
+        <div class="section-card">
+            <h2>📞 Contact</h2>
+            <p>Contact Me</p>
+        </div>
+
+        <!-- ============================================================
+        SLIDER EMOJI
+        ============================================================ -->
+        <div class="emoji-box">
+            <h2>🎭 Bagaimana Perasaanmu?</h2>
+            <p style="color: #a0a0c0; font-size: 14px; margin-bottom: 10px;">Geser slider untuk memilih ekspresi</p>
+
+            <p id="emoji">😠</p>
+            <div id="status">😠 Marah</div>
+
+            <input type="range" id="emojiSlider" min="0" max="24" value="0">
+
+            <div class="mood-stats">
+                📊 Mood terakhir: <span id="lastMood">Belum ada</span>
+            </div>
+        </div>
+
+        <!-- ============================================================
+        CANVAS DRAW
+        ============================================================ -->
+        <div class="draw-box">
+            <h2>✍️ Tanda Tangan Digital</h2>
+            <p style="color: #a0a0c0; font-size: 14px; margin-bottom: 15px;">Geser mouse atau jari untuk menandatangani</p>
+
+            <canvas id="drawCanvas"></canvas>
+
+            <div class="draw-controls">
+                <button id="clearBtn">🗑️ Hapus</button>
+                <button id="colorBtn">🎨 Ganti Warna</button>
+                <button id="sizeBtn">✏️ Ukuran</button>
+                <button id="downloadBtn" class="download-btn">💾 Download PNG</button>
+            </div>
+        </div>
+
+        <!-- ============================================================
+        FORM REGISTRASI
+        ============================================================ -->
+        <div class="register-box" id="register">
+            <h2>📝 Registrasi</h2>
+            <p class="sub">Isi data diri dengan benar</p>
+
+            <form id="registerForm">
+                <div class="form-group">
+                    <label for="fullname">Nama Lengkap</label>
+                    <input type="text" id="fullname" placeholder="Masukkan nama lengkap" required>
+                    <div class="error-msg" id="fullnameError">Nama harus diisi!</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" placeholder="Masukkan email" required>
+                    <div class="error-msg" id="emailError">Email tidak valid!</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Nomor Telepon</label>
+                    <input type="tel" id="phone" placeholder="Masukkan nomor telepon" required>
+                    <div class="error-msg" id="phoneError">Nomor telepon harus diisi!</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" placeholder="Minimal 8 karakter" required minlength="8">
+                    <div class="error-msg" id="passwordError">Password minimal 8 karakter!</div>
+                </div>
+
+                <button type="submit" class="btn-submit">🚀 Daftar Sekarang</button>
+            </form>
+
+            <p class="footer-form">💡 Data Anda aman dan tidak akan disebarkan</p>
+        </div>
+
+        <!-- ============================================================
+        TO-DO LIST PRO
+        ============================================================ -->
+        <div class="todo-box" id="todo">
+            <h2>📋 To-Do List Pro</h2>
+            <p class="sub">Tambahkan tugas, tandai selesai, atau hapus</p>
+
+            <div class="todo-input-group">
+                <input type="text" id="todoInput" placeholder="Tulis tugas baru...">
+                <select id="prioritySelect">
+                    <option value="normal">Biasa</option>
+                    <option value="high">Penting</option>
+                </select>
+                <button id="addTodoBtn">+ Tambah</button>
+            </div>
+
+            <ul class="todo-list" id="todoList">
+                <li class="todo-empty">Belum ada tugas. Tambahkan tugas baru!</li>
+            </ul>
+        </div>
+
+        <!-- ============================================================
+        SIGN UP FORM
+        ============================================================ -->
+        <div class="signup-box" id="signup">
+            <div class="orb-inner orb-inner-1"></div>
+            <div class="orb-inner orb-inner-2"></div>
+
+            <div class="form-card">
+                <h2>✨ Create Account</h2>
+                <p class="subtitle">Join us today — it only takes a moment.</p>
+
+                <form id="signupForm">
+                    <div class="row">
+                        <div class="input-group">
+                            <label for="firstName">First Name</label>
+                            <input type="text" id="firstName" placeholder="John" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="lastName">Last Name</label>
+                            <input type="text" id="lastName" placeholder="Doe" required>
+                        </div>
+                    </div>
+
+                    <div class="input-group full-width">
+                        <label for="signupEmail">Email Address</label>
+                        <input type="email" id="signupEmail" placeholder="you@example.com" required>
+                    </div>
+
+                    <div class="input-group full-width">
+                        <label for="signupPassword">Password</label>
+                        <input type="password" id="signupPassword" placeholder="Minimal 8 karakter" required minlength="8">
+                    </div>
+
+                    <button type="submit" class="btn-signup">🚀 Sign Up</button>
+                </form>
+
+                <p class="form-footer">
+                    Already have an account? <a href="#" onclick="showToast('🔜 Fitur login segera hadir!', 'info')">Log in</a>
+                </p>
+            </div>
+        </div>
+
+        <!-- ============================================================
+        ORDENAN PROJECT
+        ============================================================ -->
+        <div class="ordenan-box" id="ordenan">
+            <div class="ordenan-header">
+                <h2>🚀 Ordenan Project</h2>
+                <span class="badge-ordenan">✨ Web & App Development</span>
+            </div>
+
+            <div class="ordenan-grid">
+                <div class="ordenan-text">
+                    <h3>Build Your Digital Future</h3>
+                    <p class="desc">
+                        We build <span>websites & mobile apps</span> that are fast, 
+                        modern, and tailored to your needs. Let's create something 
+                        amazing together.
+                    </p>
+
+                    <div class="ordenan-skills">
+                        <span class="skill">React</span>
+                        <span class="skill">Laravel</span>
+                        <span class="skill">Flutter</span>
+                        <span class="skill">Node.js</span>
+                        <span class="skill">Python</span>
+                    </div>
+
+                    <div class="ordenan-buttons">
+                        <button class="btn-primary" onclick="showToast('📩 Hubungi kami via kontak di bawah!', 'info')">Start a Project</button>
+                        <button class="btn-secondary" onclick="showToast('📞 +62 812 3456 7890', 'info')">Get in Touch</button>
+                    </div>
+
+                    <div class="ordenan-bio">
+                        <strong>📍 Based in Indonesia</strong> — We've delivered <strong>50+ projects</strong> 
+                        for clients across 12 countries. From startups to enterprises, 
+                        we turn ideas into reality.
+                    </div>
+                </div>
+
+                <div class="ordenan-image">
+                    <div class="avatar">
+                        <i class="fas fa-code"></i>
+                        <span class="label">Web & App Dev</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================================
+        HELLO WORLD
+        ============================================================ -->
+        <div class="hello-box" id="hello">
+            <div class="hello-header">
+                <h2>🍎 Hello, World!</h2>
+                <span class="badge-hello">✨ Interaktif</span>
+            </div>
+
+            <div class="hello-image">
+                <img src="apple.jpeg" alt="Apple" loading="lazy">
+            </div>
+
+            <h3>Hello, World!</h3>
+            <p class="hello-sub">✨ FAHRIL PROJECT — Belajar Koding ✨</p>
+
+            <div class="hello-buttons">
+                <button class="btn btn-hello-primary" onclick="showGreeting()">👋 Sapain Gue</button>
+                <button class="btn btn-hello-secondary" onclick="changeBackground()">🎨 Ganti Warna</button>
+            </div>
+
+            <div class="hello-counter">
+                <p>Jumlah sapaan:</p>
+                <span id="counterDisplay">0</span>
+                <br>
+                <button class="btn-reset" onclick="resetCounter()">↺ Reset</button>
+            </div>
+        </div>
+
+        <!-- ============================================================
+        LUXURY PROPERTY CARD
+        ============================================================ -->
+        <div class="property-box" id="property">
+            <div class="property-header">
+                <h2>🏠 Luxury Property</h2>
+                <span class="badge-prop">⭐ Luxury</span>
+            </div>
+
+            <div class="specs-grid">
+                <div class="spec-item">
+                    <div class="spec-value">4.5</div>
+                    <div class="spec-label">Bathrooms</div>
+                </div>
+                <div class="spec-item">
+                    <div class="spec-value">4,200</div>
+                    <div class="spec-label">Sq Ft</div>
+                </div>
+                <div class="spec-item">
+                    <div class="spec-value">3</div>
+                    <div class="spec-label">Bedrooms</div>
+                </div>
+            </div>
+
+            <div class="amenities-title">✨ Key Features</div>
+            <div class="amenity-tags">
+                <span class="amenity-tag"><i class="fas fa-water"></i> Ocean View</span>
+                <span class="amenity-tag"><i class="fas fa-swimmer"></i> Infinity Pool</span>
+                <span class="amenity-tag"><i class="fas fa-home"></i> Smart Home</span>
+                <span class="amenity-tag"><i class="fas fa-wine-bottle"></i> Wine Cellar</span>
+                <span class="amenity-tag"><i class="fas fa-car"></i> 3-Car Garage</span>
+            </div>
+
+            <div class="agent-row">
+                <div class="agent-photo">JE</div>
+                <div class="agent-info">
+                    <h5>Josh Edward</h5>
+                    <p>Senior Broker • DRE# 01234567</p>
+                </div>
+                <button class="contact-btn" onclick="showToast('📞 Menghubungi Josh Edward...', 'info')">Contact</button>
+            </div>
+        </div>
+
+        <!-- ============================================================
+        TEAM FEEDBACK
+        ============================================================ -->
+        <div class="feedback-box" id="feedback">
+            <div class="feedback-header">
+                <h2>📝 Team Feedback</h2>
+                <span class="badge-fb">⭐ Rate & Review</span>
+            </div>
+
+            <div class="rate-item">
+                <div class="label">Creativity <span>New ideas and innovation</span></div>
+                <div class="stars" data-category="creativity">
+                    <span data-value="1">⭐</span>
+                    <span data-value="2">⭐</span>
+                    <span data-value="3">⭐</span>
+                    <span data-value="4">⭐</span>
+                    <span data-value="5">⭐</span>
+                </div>
+            </div>
+
+            <div class="rate-item">
+                <div class="label">Reliability <span>Meeting deadlines consistently</span></div>
+                <div class="stars" data-category="reliability">
+                    <span data-value="1">⭐</span>
+                    <span data-value="2">⭐</span>
+                    <span data-value="3">⭐</span>
+                    <span data-value="4">⭐</span>
+                    <span data-value="5">⭐</span>
+                </div>
+            </div>
+
+            <div class="rate-item">
+                <div class="label">Leadership <span>Guidance and team motivation</span></div>
+                <div class="stars" data-category="leadership">
+                    <span data-value="1">⭐</span>
+                    <span data-value="2">⭐</span>
+                    <span data-value="3">⭐</span>
+                    <span data-value="4">⭐</span>
+                    <span data-value="5">⭐</span>
+                </div>
+            </div>
+
+            <label class="ta-label">💬 Additional Comments</label>
+            <textarea id="feedbackComment" placeholder="Share more thoughts..."></textarea>
+
+            <button class="btn-submit-feedback" onclick="submitFeedback()">🚀 Submit Feedback</button>
+        </div>
+
+        <!-- ============================================================
+        FOOTER
+        ============================================================ -->
+        <div class="footer">
+            ⚡ FAHRIL PROJECT — Built with metal &amp; code ⚡
+        </div>
+
+    </div>
+
+    <!-- ============================================================
+    TOAST NOTIFIKASI
+    ============================================================ -->
+    <div class="toast" id="toast"></div>
+
+    <script>
+        // ================================================================
+        // TOAST NOTIFIKASI
+        // ================================================================
+        function showToast(message, type = 'info') {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.className = `toast ${type} show`;
+            clearTimeout(toast._timeout);
+            toast._timeout = setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // ================================================================
+        // HELLO WORLD - COUNTER & INTERAKSI
+        // ================================================================
+        let counter = parseInt(localStorage.getItem('helloCounter')) || 0;
+
+        function updateCounterDisplay() {
+            document.getElementById('counterDisplay').textContent = counter;
+            localStorage.setItem('helloCounter', counter);
+        }
+
+        function showGreeting() {
+            counter++;
+            updateCounterDisplay();
+
+            const now = new Date();
+            const hours = now.getHours();
+            let timeGreeting = 'Selamat pagi! 🌅';
+            if (hours >= 12 && hours < 17) timeGreeting = 'Selamat siang! ☀️';
+            else if (hours >= 17 && hours < 20) timeGreeting = 'Selamat sore! 🌇';
+            else if (hours >= 20) timeGreeting = 'Selamat malam! 🌙';
+
+            const messages = [
+                `👋 Hello, World! ${timeGreeting}`,
+                `🍎 Apple says hello! ${timeGreeting}`,
+                `🚀 Halo dari FAHRIL PROJECT! ${timeGreeting}`,
+                `✨ Semangat ngoding, Mas! ${timeGreeting}`,
+                `🌍 Hello, planet Bumi! ${timeGreeting}`
+            ];
+
+            const randomMsg = messages[Math.floor(Math.random() * messages.length)];
+            alert(randomMsg);
+        }
+
+        function resetCounter() {
+            if (confirm('Reset jumlah sapaan?')) {
+                counter = 0;
+                updateCounterDisplay();
+                showToast('↺ Counter berhasil di-reset!', 'info');
+            }
+        }
+
+        function changeBackground() {
+            const colors = [
+                '#0a0a1a', '#1a0a2e', '#0a1a2e', '#1a1a0a', '#2e0a1a', '#0a2e1a', '#1a1a3e'
+            ];
+            const randomColor = colors[Math.floor(Math.random() * colors.length)];
+            document.body.style.background = randomColor;
+            showToast('🎨 Background berubah!', 'info');
+        }
+
+        // ================================================================
+        // SLIDER EMOJI (MOOD TRACKER)
+        // ================================================================
+        const emojis = [
+            '😠', '😡', '🤬', '😤', '😣', '😖', '😫', '😩', '😔', '😒',
+            '🙄', '😐', '😑', '😶', '😏', '😊', '🙂', '😁', '😂', '🤣',
+            '😍', '🥰', '😘', '😗', '😙'
+        ];
+
+        const labels = [
+            'Marah', 'Sangat Marah', 'Kesal', 'Merengut', 'Kecewa', 'Sedih', 'Pusing',
+            'Lelah', 'Muram', 'Bosan', 'Malas', 'Netral', 'Diam', 'Bungkam', 'Sombong',
+            'Tersenyum', 'Baik', 'Gembira', 'Tertawa', 'Terbahak-bahak', 'Jatuh Cinta',
+            'Sangat Sayang', 'Kirim Cium', 'Cium', 'Ciuman'
+        ];
+
+        const emojiSlider = document.getElementById('emojiSlider');
+        const emojiEl = document.getElementById('emoji');
+        const statusEl = document.getElementById('status');
+        const lastMoodEl = document.getElementById('lastMood');
+
+        function loadLastMood() {
+            const saved = localStorage.getItem('lastMood');
+            if (saved) {
+                const data = JSON.parse(saved);
+                lastMoodEl.textContent = `${data.emoji} ${data.label}`;
+            }
+        }
+
+        function updateEmoji(value) {
+            const index = parseInt(value);
+            const emoji = emojis[index];
+            const label = labels[index];
+            emojiEl.textContent = emoji;
+            statusEl.textContent = `${emoji} ${label}`;
+            emojiEl.style.transform = 'scale(1.3)';
+            setTimeout(() => { emojiEl.style.transform = 'scale(1)'; }, 150);
+
+            localStorage.setItem('lastMood', JSON.stringify({ emoji, label }));
+            lastMoodEl.textContent = `${emoji} ${label}`;
+        }
+
+        emojiSlider.addEventListener('input', function() {
+            updateEmoji(this.value);
+        });
+
+        loadLastMood();
+
+        // ================================================================
+        // CANVAS DRAW (TANDA TANGAN DIGITAL)
+        // ================================================================
+        const canvas = document.getElementById('drawCanvas');
+        const ctx = canvas.getContext('2d');
+
+        let isDragging = false;
+        let lastX = 0;
+        let lastY = 0;
+        let currentColor = '#ff6ba0';
+        let currentSize = 8;
+
+        function resizeCanvas() {
+            const rect = canvas.getBoundingClientRect();
+            canvas.width = rect.width;
+            canvas.height = rect.height;
+            ctx.lineCap = 'round';
+            ctx.lineJoin = 'round';
+            ctx.fillStyle = '#1a1a2e';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+        }
+
+        function updateCoordinates(clientX, clientY) {
+            const rect = canvas.getBoundingClientRect();
+            const scaleX = canvas.width / rect.width;
+            const scaleY = canvas.height / rect.height;
+            const x = (clientX - rect.left) * scaleX;
+            const y = (clientY - rect.top) * scaleY;
+
+            if (isDragging) {
+                ctx.beginPath();
+                ctx.moveTo(lastX, lastY);
+                ctx.lineTo(x, y);
+                ctx.strokeStyle = currentColor;
+                ctx.lineWidth = currentSize;
+                ctx.stroke();
+            }
+
+            lastX = x;
+            lastY = y;
+        }
+
+        canvas.addEventListener('mousedown', (e) => {
+            isDragging = true;
+            updateCoordinates(e.clientX, e.clientY);
+        });
+
+        window.addEventListener('mousemove', (e) => {
+            if (isDragging) updateCoordinates(e.clientX, e.clientY);
+        });
+
+        window.addEventListener('mouseup', () => { isDragging = false; });
+
+        canvas.addEventListener('touchstart', (e) => {
+            isDragging = true;
+            const touch = e.touches[0];
+            updateCoordinates(touch.clientX, touch.clientY);
+        }, { passive: true });
+
+        window.addEventListener('touchmove', (e) => {
+            if (isDragging) {
+                const touch = e.touches[0];
+                updateCoordinates(touch.clientX, touch.clientY);
+            }
+        }, { passive: true });
+
+        window.addEventListener('touchend', () => { isDragging = false; });
+
+        window.addEventListener('resize', resizeCanvas);
+
+        document.getElementById('clearBtn').addEventListener('click', () => {
+            ctx.fillStyle = '#1a1a2e';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            showToast('🗑️ Kanvas berhasil dibersihkan!', 'info');
+        });
+
+        document.getElementById('colorBtn').addEventListener('click', () => {
+            const colors = ['#ff6ba0', '#a855f7', '#4fc3f7', '#4ade80', '#fbbf24', '#ff6b6b', '#ffffff'];
+            currentColor = colors[Math.floor(Math.random() * colors.length)];
+            showToast(`🎨 Warna diubah menjadi ${currentColor}`, 'info');
+        });
+
+        document.getElementById('sizeBtn').addEventListener('click', () => {
+            const sizes = [4, 8, 12, 20, 30];
+            currentSize = sizes[(sizes.indexOf(currentSize) + 1) % sizes.length];
+            showToast(`✏️ Ukuran kuas: ${currentSize}px`, 'info');
+        });
+
+        document.getElementById('downloadBtn').addEventListener('click', () => {
+            const link = document.createElement('a');
+            link.download = 'tanda-tangan.png';
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+            showToast('💾 Tanda tangan berhasil di-download!', 'success');
+        });
+
+        // ================================================================
+        // FORM REGISTRASI (VALIDASI REAL-TIME)
+        // ================================================================
+        const registerForm = document.getElementById('registerForm');
+        const fullnameInput = document.getElementById('fullname');
+        const emailInput = document.getElementById('email');
+        const phoneInput = document.getElementById('phone');
+        const passwordInput = document.getElementById('password');
+
+        function validateField(input, errorId, condition, message) {
+            const errorEl = document.getElementById(errorId);
+            if (!condition) {
+                input.classList.add('error');
+                input.classList.remove('success');
+                errorEl.textContent = message;
+                errorEl.classList.add('show');
+                return false;
+            } else {
+                input.classList.remove('error');
+                input.classList.add('success');
+                errorEl.classList.remove('show');
+                return true;
+            }
+        }
+
+        fullnameInput.addEventListener('input', function() {
+            validateField(this, 'fullnameError', this.value.trim().length > 0, 'Nama harus diisi!');
+        });
+
+        emailInput.addEventListener('input', function() {
+            const isValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.value);
+            validateField(this, 'emailError', isValid, 'Email tidak valid!');
+        });
+
+        phoneInput.addEventListener('input', function() {
+            validateField(this, 'phoneError', this.value.trim().length > 0, 'Nomor telepon harus diisi!');
+        });
+
+        passwordInput.addEventListener('input', function() {
+            validateField(this, 'passwordError', this.value.length >= 8, 'Password minimal 8 karakter!');
+        });
+
+        registerForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const isFullnameValid = validateField(fullnameInput, 'fullnameError', fullnameInput.value.trim().length > 0, 'Nama harus diisi!');
+            const isEmailValid = validateField(emailInput, 'emailError', /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailInput.value), 'Email tidak valid!');
+            const isPhoneValid = validateField(phoneInput, 'phoneError', phoneInput.value.trim().length > 0, 'Nomor telepon harus diisi!');
+            const isPasswordValid = validateField(passwordInput, 'passwordError', passwordInput.value.length >= 8, 'Password minimal 8 karakter!');
+
+            if (isFullnameValid && isEmailValid && isPhoneValid && isPasswordValid) {
+                showToast('✅ Pendaftaran berhasil! Terima kasih sudah mendaftar.', 'success');
+                this.reset();
+                document.querySelectorAll('.form-group input').forEach(input => {
+                    input.classList.remove('success', 'error');
+                });
+            } else {
+                showToast('⚠️ Harap lengkapi data dengan benar!', 'error');
+            }
+        });
+
+        // ================================================================
+        // TO-DO LIST PRO
+        // ================================================================
+        let todos = [];
+
+        function loadTodos() {
+            const saved = localStorage.getItem('todos');
+            if (saved) {
+                todos = JSON.parse(saved);
+            } else {
+                todos = [
+                    { id: 1, text: 'Belajar HTML', done: false, priority: 'high' },
+                    { id: 2, text: 'Bikin project CSS', done: false, priority: 'normal' },
+                ];
+                saveTodos();
+            }
+            renderTodos();
+        }
+
+        function saveTodos() {
+            localStorage.setItem('todos', JSON.stringify(todos));
+        }
+
+        function renderTodos() {
+            const list = document.getElementById('todoList');
+            if (todos.length === 0) {
+                list.innerHTML = '<li class="todo-empty">Belum ada tugas. Tambahkan tugas baru!</li>';
+                return;
+            }
+
+            list.innerHTML = '';
+            todos.forEach((todo, index) => {
+                const li = document.createElement('li');
+                li.innerHTML = `
+                    <input type="checkbox" ${todo.done ? 'checked' : ''} onchange="toggleTodo(${index})">
+                    <span class="todo-text ${todo.done ? 'done' : ''}">${todo.text}</span>
+                    <span class="priority ${todo.priority === 'high' ? 'priority-high' : 'priority-normal'}">${todo.priority === 'high' ? '🔥 Penting' : '📌 Biasa'}</span>
+                    <button class="delete-btn" onclick="deleteTodo(${index})">✕</button>
+                `;
+                list.appendChild(li);
+            });
+        }
+
+        function addTodo() {
+            const input = document.getElementById('todoInput');
+            const priority = document.getElementById('prioritySelect').value;
+            const text = input.value.trim();
+            if (text === '') {
+                showToast('⚠️ Tugas tidak boleh kosong!', 'error');
+                return;
+            }
+
+            const newTodo = {
+                id: Date.now(),
+                text: text,
+                done: false,
+                priority: priority
+            };
+
+            todos.push(newTodo);
+            saveTodos();
+            renderTodos();
+            input.value = '';
+            showToast('✅ Tugas berhasil ditambahkan!', 'success');
+        }
+
+        function toggleTodo(index) {
+            todos[index].done = !todos[index].done;
+            saveTodos();
+            renderTodos();
+        }
+
+        function deleteTodo(index) {
+            if (confirm(`Hapus tugas "${todos[index].text}"?`)) {
+                todos.splice(index, 1);
+                saveTodos();
+                renderTodos();
+                showToast('🗑️ Tugas berhasil dihapus!', 'info');
+            }
+        }
+
+        document.getElementById('addTodoBtn').addEventListener('click', addTodo);
+        document.getElementById('todoInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') addTodo();
+        });
+
+        // ================================================================
+        // SIGN UP FORM (ANIMATED)
+        // ================================================================
+        document.getElementById('signupForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const firstName = document.getElementById('firstName').value.trim();
+            const lastName = document.getElementById('lastName').value.trim();
+            const email = document.getElementById('signupEmail').value.trim();
+            const password = document.getElementById('signupPassword').value;
+
+            if (!firstName || !lastName || !email || password.length < 8) {
+                showToast('⚠️ Harap lengkapi semua data dengan benar!', 'error');
+                return;
+            }
+
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                showToast('⚠️ Email tidak valid!', 'error');
+                return;
+            }
+
+            showToast('✅ Akun berhasil dibuat! Selamat bergabung! 🎉', 'success');
+            this.reset();
+        });
+
+        // ================================================================
+        // TEAM FEEDBACK - STAR RATING
+        // ================================================================
+        document.querySelectorAll('.feedback-box .rate-item .stars').forEach(starGroup => {
+            const stars = starGroup.querySelectorAll('span');
+
+            stars.forEach((star, index) => {
+                star.addEventListener('mouseenter', () => {
+                    stars.forEach((s, i) => {
+                        if (i <= index) {
+                            s.style.color = '#fbbf24';
+                            s.style.transform = 'scale(1.15)';
+                        } else {
+                            s.style.color = '#444';
+                            s.style.transform = 'scale(1)';
+                        }
+                    });
+                });
+
+                starGroup.addEventListener('mouseleave', () => {
+                    stars.forEach(s => {
+                        s.style.color = s.classList.contains('active') ? '#fbbf24' : '#444';
+                        s.style.transform = 'scale(1)';
+                    });
+                });
+
+                star.addEventListener('click', () => {
+                    const value = parseInt(star.dataset.value);
+                    stars.forEach(s => s.classList.remove('active'));
+                    stars.forEach((s, i) => {
+                        if (i < value) {
+                            s.classList.add('active');
+                        }
+                    });
+                    starGroup.dataset.rating = value;
+                });
+            });
+        });
+
+        // ================================================================
+        // TEAM FEEDBACK - SUBMIT
+        // ================================================================
+        function submitFeedback() {
+            const ratings = {};
+            document.querySelectorAll('.feedback-box .rate-item .stars').forEach(group => {
+                const category = group.dataset.category;
+                const rating = parseInt(group.dataset.rating) || 0;
+                ratings[category] = rating;
+            });
+
+            const comment = document.getElementById('feedbackComment').value.trim();
+
+            const hasRating = Object.values(ratings).some(r => r > 0);
+            if (!hasRating && !comment) {
+                showToast('⚠️ Beri rating atau tulis komentar!', 'error');
+                return;
+            }
+
+            let message = '✅ Feedback submitted!\n\n';
+            const labels = {
+                'creativity': 'Creativity',
+                'reliability': 'Reliability',
+                'leadership': 'Leadership'
+            };
+            for (const [key, value] of Object.entries(ratings)) {
+                const label = labels[key] || key;
+                const stars = '⭐'.repeat(value) + '☆'.repeat(5 - value);
+                message += `${label}: ${stars} (${value}/5)\n`;
+            }
+            if (comment) {
+                message += `\n💬 Comment: ${comment}`;
+            }
+
+            alert(message);
+            showToast('✅ Feedback berhasil dikirim! Terima kasih!', 'success');
+        }
+
+        // ================================================================
+        // SCROLL SMOOTH UNTUK NAV LINK
+        // ================================================================
+        document.querySelectorAll('.main-nav .nav-links a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                const target = document.querySelector(targetId);
+                if (target) {
+                    e.preventDefault();
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // ================================================================
+        // INIT
+        // ================================================================
+        resizeCanvas();
+        loadTodos();
+        updateCounterDisplay();
+    </script>
+
+</body>
+</html>
