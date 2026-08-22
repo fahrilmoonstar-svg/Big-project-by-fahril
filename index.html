@@ -1405,6 +1405,226 @@
         }
 
         /* ================================================================
+           RING & TRACK (KOMPONEN BARU)
+           ================================================================ */
+        .rt-container {
+            max-width: 420px;
+            margin: 0 auto;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .rt-ring-wrapper {
+            position: relative;
+            width: 150px;
+            height: 150px;
+        }
+
+        .rt-ring-wrapper svg {
+            width: 150px;
+            height: 150px;
+            transform: rotate(-90deg);
+        }
+
+        .rt-ring-track {
+            fill: none;
+            stroke: rgba(255, 255, 255, 0.06);
+            stroke-width: 8;
+        }
+
+        .rt-ring-fill {
+            fill: none;
+            stroke: url(#rtRingGrad);
+            stroke-width: 8;
+            stroke-linecap: round;
+            stroke-dasharray: 1 1;
+            stroke-dashoffset: 0;
+            transition: stroke-dashoffset 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .rt-ring-center {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .rt-progress-text {
+            font-size: 32px;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--secondary), var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .rt-progress-label {
+            font-size: 11px;
+            color: #888;
+            font-weight: 600;
+        }
+
+        .rt-rig-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            width: 100%;
+        }
+
+        .rt-rig {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .rt-canopy {
+            width: 50px;
+            height: 24px;
+            background: linear-gradient(135deg, rgba(168, 85, 247, 0.2), rgba(255, 107, 160, 0.15));
+            border-radius: 50% 50% 0 0;
+            border: 2px solid rgba(168, 85, 247, 0.15);
+            position: relative;
+            transition: all 0.6s ease;
+        }
+
+        .rt-canopy::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 16px;
+            background: rgba(168, 85, 247, 0.15);
+        }
+
+        .rt-arrow {
+            width: 0;
+            height: 0;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-top: 14px solid var(--primary);
+            transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            opacity: 0.4;
+        }
+
+        .rt-check {
+            font-size: 22px;
+            color: #4ade80;
+            opacity: 0;
+            transform: scale(0.5);
+            transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .rt-rig.active .rt-arrow {
+            transform: translateY(-8px);
+            opacity: 1;
+            border-top-color: var(--secondary);
+        }
+
+        .rt-rig.done .rt-canopy {
+            border-color: #4ade80;
+            background: linear-gradient(135deg, rgba(74, 222, 128, 0.15), rgba(34, 197, 94, 0.08));
+        }
+
+        .rt-rig.done .rt-arrow {
+            opacity: 0;
+            transform: scale(0);
+        }
+
+        .rt-rig.done .rt-check {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .rt-rig-label {
+            font-size: 11px;
+            color: #888;
+            font-weight: 500;
+        }
+
+        .rt-progress-bar {
+            width: 100%;
+        }
+
+        .rt-bar-track {
+            width: 100%;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .rt-bar-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--secondary), var(--primary));
+            border-radius: 10px;
+            transition: width 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .rt-bar-label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-top: 3px;
+        }
+
+        .rt-bar-label span:last-child {
+            color: var(--secondary);
+            font-weight: 600;
+        }
+
+        .rt-btn {
+            padding: 10px 28px;
+            background: linear-gradient(135deg, var(--secondary), var(--primary));
+            border: none;
+            border-radius: var(--radius-full);
+            color: #fff;
+            font-weight: 700;
+            font-size: 14px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: inherit;
+            box-shadow: 0 4px 20px rgba(168, 85, 247, 0.3);
+            margin-top: 4px;
+        }
+
+        .rt-btn:hover:not(:disabled) {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(168, 85, 247, 0.5);
+        }
+
+        .rt-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        @media (max-width: 480px) {
+            .rt-ring-wrapper { width: 110px; height: 110px; }
+            .rt-ring-wrapper svg { width: 110px; height: 110px; }
+            .rt-progress-text { font-size: 24px; }
+            .rt-canopy { width: 40px; height: 20px; }
+            .rt-arrow { border-left-width: 6px; border-right-width: 6px; border-top-width: 11px; }
+            .rt-rig-container { gap: 12px; }
+        }
+
+        @media (prefers-reduced-motion) {
+            .rt-rig { display: none; }
+            .rt-ring-fill { transition: none; }
+            .rt-bar-fill { transition: none; }
+        }
+
+        /* ================================================================
            DOOR SIGN IN
            ================================================================ */
         .doorbtn {
@@ -1713,6 +1933,7 @@
                     <li><a href="#love">Love</a></li>
                     <li><a href="#login">Login</a></li>
                     <li><a href="#lightspring">Light</a></li>
+                    <li><a href="#ringtrack">Ring</a></li>
                     <li><a href="#contact" class="cta">Contact</a></li>
                 </ul>
             </div>
@@ -2084,7 +2305,7 @@
         </section>
 
         <!-- ============================================================
-        LIGHT & SPRING (KOMPONEN BARU)
+        LIGHT & SPRING
         ============================================================ -->
         <section class="section" id="lightspring">
             <div class="section-header">
@@ -2135,6 +2356,72 @@
                 </div>
 
                 <button class="ls-btn" onclick="toggleLsSpring()">🔄 Animasi Spring</button>
+            </div>
+        </section>
+
+        <!-- ============================================================
+        RING & TRACK (KOMPONEN BARU)
+        ============================================================ -->
+        <section class="section" id="ringtrack">
+            <div class="section-header">
+                <h2 class="section-title">🔄 Ring & Track</h2>
+                <span class="badge">Progress</span>
+            </div>
+            <p class="section-desc">Animasi ring progress dengan payload.</p>
+
+            <div class="rt-container">
+                <!-- Ring -->
+                <div class="rt-ring-wrapper">
+                    <svg viewBox="0 0 160 160">
+                        <defs>
+                            <linearGradient id="rtRingGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#ff6ba0"/>
+                                <stop offset="100%" stop-color="#a855f7"/>
+                            </linearGradient>
+                        </defs>
+                        <circle class="rt-ring-track" cx="80" cy="80" r="68"/>
+                        <circle class="rt-ring-fill" id="rtRingFill" cx="80" cy="80" r="68"/>
+                    </svg>
+                    <div class="rt-ring-center">
+                        <span class="rt-progress-text" id="rtProgressText">0%</span>
+                        <span class="rt-progress-label">Progress</span>
+                    </div>
+                </div>
+
+                <!-- Payload (Rig) -->
+                <div class="rt-rig-container">
+                    <div class="rt-rig" id="rtRig1">
+                        <div class="rt-canopy"></div>
+                        <div class="rt-arrow"></div>
+                        <div class="rt-check">✅</div>
+                        <span class="rt-rig-label">Payload 1</span>
+                    </div>
+                    <div class="rt-rig" id="rtRig2">
+                        <div class="rt-canopy"></div>
+                        <div class="rt-arrow"></div>
+                        <div class="rt-check">✅</div>
+                        <span class="rt-rig-label">Payload 2</span>
+                    </div>
+                    <div class="rt-rig" id="rtRig3">
+                        <div class="rt-canopy"></div>
+                        <div class="rt-arrow"></div>
+                        <div class="rt-check">✅</div>
+                        <span class="rt-rig-label">Payload 3</span>
+                    </div>
+                </div>
+
+                <!-- Progress Bar -->
+                <div class="rt-progress-bar">
+                    <div class="rt-bar-track">
+                        <div class="rt-bar-fill" id="rtBarFill"></div>
+                    </div>
+                    <div class="rt-bar-label">
+                        <span>Loading</span>
+                        <span id="rtBarText">0%</span>
+                    </div>
+                </div>
+
+                <button class="rt-btn" id="rtBtn" onclick="startRtAnimation()">🚀 Mulai Animasi</button>
             </div>
         </section>
 
@@ -2659,6 +2946,93 @@
         document.addEventListener('DOMContentLoaded', () => {
             const rod = document.getElementById('lsRod');
             if (rod) rod.style.animation = 'lsBounce 2s ease-in-out infinite';
+        });
+
+        // ================================================================
+        // RING & TRACK
+        // ================================================================
+        let rtAnimating = false;
+
+        function startRtAnimation() {
+            if (rtAnimating) return;
+            rtAnimating = true;
+
+            const btn = document.getElementById('rtBtn');
+            btn.disabled = true;
+            btn.textContent = '⏳ Running...';
+
+            const total = 100;
+            let step = 0;
+            const duration = 3000;
+            const interval = duration / total;
+
+            const rigs = [
+                document.getElementById('rtRig1'),
+                document.getElementById('rtRig2'),
+                document.getElementById('rtRig3')
+            ];
+
+            resetRtAll();
+
+            let rigIdx = 0;
+            const anim = setInterval(() => {
+                step++;
+                const progress = step / total;
+
+                // Update ring
+                const ring = document.getElementById('rtRingFill');
+                const circ = 2 * Math.PI * 68;
+                ring.style.strokeDashoffset = circ - (progress * circ);
+                document.getElementById('rtProgressText').textContent = Math.round(progress * 100) + '%';
+
+                // Update bar
+                document.getElementById('rtBarFill').style.width = (progress * 100) + '%';
+                document.getElementById('rtBarText').textContent = Math.round(progress * 100) + '%';
+
+                // Rig activation
+                const p = step / total;
+                if (p > 0.1 && rigIdx === 0) { rigs[0].classList.add('active'); rigIdx++; }
+                if (p > 0.35 && rigIdx === 1) { rigs[1].classList.add('active'); rigIdx++; }
+                if (p > 0.65 && rigIdx === 2) { rigs[2].classList.add('active'); rigIdx++; }
+
+                if (step >= total) {
+                    clearInterval(anim);
+                    rigs.forEach(r => { r.classList.remove('active'); r.classList.add('done'); });
+                    btn.textContent = '✅ Selesai!';
+                    btn.disabled = false;
+                    rtAnimating = false;
+                }
+            }, interval);
+
+            setTimeout(() => {
+                if (rtAnimating) {
+                    clearInterval(anim);
+                    btn.textContent = '🔄 Ulangi';
+                    btn.disabled = false;
+                    rtAnimating = false;
+                }
+            }, duration + 1000);
+        }
+
+        function resetRtAll() {
+            const ring = document.getElementById('rtRingFill');
+            ring.style.strokeDashoffset = 0;
+            document.getElementById('rtProgressText').textContent = '0%';
+            document.getElementById('rtBarFill').style.width = '0%';
+            document.getElementById('rtBarText').textContent = '0%';
+            document.querySelectorAll('.rt-rig').forEach(r => r.classList.remove('active', 'done'));
+            const btn = document.getElementById('rtBtn');
+            btn.textContent = '🚀 Mulai Animasi';
+            btn.disabled = false;
+            rtAnimating = false;
+        }
+
+        // Init ring
+        document.addEventListener('DOMContentLoaded', () => {
+            const ring = document.getElementById('rtRingFill');
+            const circ = 2 * Math.PI * 68;
+            ring.style.strokeDasharray = circ + ' ' + circ;
+            ring.style.strokeDashoffset = circ;
         });
 
         // ================================================================
