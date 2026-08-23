@@ -65,7 +65,7 @@
         }
 
         /* ================================================================
-           HEADER REACT-STYLE (BARU)
+           HEADER REACT-STYLE
            ================================================================ */
         .header-react {
             background: rgba(10, 10, 26, 0.85);
@@ -1857,6 +1857,115 @@
         }
 
         /* ================================================================
+           SIGN UP FORM (KOMPONEN BARU)
+           ================================================================ */
+        .su-container {
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .input-group {
+            margin-bottom: 16px;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-muted);
+            margin-bottom: 4px;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid var(--border);
+            border-radius: var(--radius-md);
+            background: var(--color-bg-input);
+            color: var(--text);
+            font-size: 15px;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .input-group input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 20px rgba(168, 85, 247, 0.1);
+        }
+
+        .input-group input::placeholder {
+            color: #666;
+        }
+
+        .input-group input.error {
+            border-color: #ef4444;
+        }
+
+        .input-group input.success {
+            border-color: #22c55e;
+        }
+
+        .input-group .err-msg {
+            color: #ef4444;
+            font-size: 12px;
+            margin-top: 4px;
+            display: none;
+        }
+
+        .input-group .err-msg.show {
+            display: block;
+        }
+
+        .su-btn {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #1a1a2e, #2a2a4a);
+            color: #fff;
+            border: none;
+            border-radius: var(--radius-md);
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: inherit;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+            margin-top: 4px;
+        }
+
+        .su-btn::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(255, 107, 160, 0.15), rgba(168, 85, 247, 0.1));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            border-radius: var(--radius-md);
+        }
+
+        .su-btn:hover:not(:disabled) {
+            opacity: 0.9;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(168, 85, 247, 0.2);
+        }
+
+        .su-btn:hover::after {
+            opacity: 1;
+        }
+
+        .su-btn:active:not(:disabled) {
+            transform: translateY(1px) scale(0.98);
+        }
+
+        .su-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* ================================================================
            DOOR SIGN IN
            ================================================================ */
         .doorbtn {
@@ -2164,6 +2273,7 @@
                         <li><a href="#lightspring" class="nav-link-react">Light</a></li>
                         <li><a href="#ringtrack" class="nav-link-react">Ring</a></li>
                         <li><a href="#video" class="nav-link-react">Video</a></li>
+                        <li><a href="#signup" class="nav-link-react">SignUp</a></li>
                     </ul>
                 </nav>
 
@@ -2701,6 +2811,41 @@
                     <button class="vp-volume" id="vpVolumeBtn"><i class="fas fa-volume-up"></i></button>
                     <button class="vp-fullscreen" id="vpFullscreenBtn"><i class="fas fa-expand"></i></button>
                 </div>
+            </div>
+        </section>
+
+        <!-- ============================================================
+        SIGN UP FORM (KOMPONEN BARU)
+        ============================================================ -->
+        <section class="section" id="signup">
+            <div class="section-header">
+                <h2 class="section-title">✨ Sign Up Form</h2>
+                <span class="badge">Validasi</span>
+            </div>
+            <p class="section-desc">Daftar akun baru dengan validasi real-time.</p>
+
+            <div class="su-container">
+                <form id="suForm">
+                    <div class="input-group">
+                        <label>Full Name</label>
+                        <input type="text" id="suName" placeholder="John Doe" required>
+                        <div class="err-msg" id="suNameErr">Nama harus diisi!</div>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Email Address</label>
+                        <input type="email" id="suEmail" placeholder="you@example.com" required>
+                        <div class="err-msg" id="suEmailErr">Email tidak valid!</div>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Password</label>
+                        <input type="password" id="suPassword" placeholder="Minimal 8 karakter" required minlength="8">
+                        <div class="err-msg" id="suPassErr">Password minimal 8 karakter!</div>
+                    </div>
+
+                    <button type="submit" class="su-btn" id="suBtn">🚀 Sign Up</button>
+                </form>
             </div>
         </section>
 
@@ -3451,6 +3596,67 @@
         vpWrapper.addEventListener('mousemove', vpShowControls);
         vpWrapper.addEventListener('touchstart', vpShowControls);
         setTimeout(vpShowControls, 100);
+
+        // ================================================================
+        // SIGN UP FORM
+        // ================================================================
+        const suForm = document.getElementById('suForm');
+        const suName = document.getElementById('suName');
+        const suEmail = document.getElementById('suEmail');
+        const suPassword = document.getElementById('suPassword');
+        const suBtn = document.getElementById('suBtn');
+
+        function validateSuField(input, errorId, condition, msg) {
+            const err = document.getElementById(errorId);
+            if (!condition) {
+                input.classList.add('error');
+                input.classList.remove('success');
+                err.textContent = msg;
+                err.classList.add('show');
+                return false;
+            } else {
+                input.classList.remove('error');
+                input.classList.add('success');
+                err.classList.remove('show');
+                return true;
+            }
+        }
+
+        suName.addEventListener('input', function() {
+            validateSuField(this, 'suNameErr', this.value.trim().length > 0, 'Nama harus diisi!');
+        });
+
+        suEmail.addEventListener('input', function() {
+            const isValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.value);
+            validateSuField(this, 'suEmailErr', isValid, 'Email tidak valid!');
+        });
+
+        suPassword.addEventListener('input', function() {
+            validateSuField(this, 'suPassErr', this.value.length >= 8, 'Password minimal 8 karakter!');
+        });
+
+        suForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const isNameValid = validateSuField(suName, 'suNameErr', suName.value.trim().length > 0, 'Nama harus diisi!');
+            const isEmailValid = validateSuField(suEmail, 'suEmailErr', /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(suEmail.value), 'Email tidak valid!');
+            const isPassValid = validateSuField(suPassword, 'suPassErr', suPassword.value.length >= 8, 'Password minimal 8 karakter!');
+
+            if (isNameValid && isEmailValid && isPassValid) {
+                suBtn.disabled = true;
+                suBtn.textContent = '⏳ Processing...';
+
+                setTimeout(() => {
+                    showToast('✅ Akun berhasil dibuat! Selamat bergabung! 🎉', 'success');
+                    suBtn.disabled = false;
+                    suBtn.textContent = '🚀 Sign Up';
+                    suForm.reset();
+                    document.querySelectorAll('#suForm .input-group input').forEach(i => i.className = '');
+                }, 1500);
+            } else {
+                showToast('⚠️ Harap lengkapi data dengan benar!', 'error');
+            }
+        });
 
         // ================================================================
         // DOOR SIGN IN
