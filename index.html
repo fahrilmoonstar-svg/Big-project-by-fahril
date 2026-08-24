@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fahril Project - Kalkulator & Ring</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0a0a1a;
+            color: #e0e0e0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+        .section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .section-title {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            background: linear-gradient(135deg, #ff6ba0, #a855f7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .section-desc {
+            color: #a0a0c0;
+            font-size: 14px;
+            margin-bottom: 18px;
+        }
+
+        /* KALKULATOR */
+        .calc-display {
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 12px;
+            padding: 14px 18px;
+            margin-bottom: 14px;
+            min-height: 70px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            justify-content: flex-end;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .calc-display .expr {
+            font-size: 14px;
+            color: #888;
+            min-height: 20px;
+        }
+        .calc-display .result {
+            font-size: 30px;
+            font-weight: 700;
+        }
+        .calc-display .result.error {
+            color: #ef4444;
+            font-size: 20px;
+        }
+        .calc-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+        }
+        .calc-grid button {
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            font-size: 20px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+            background: rgba(255, 255, 255, 0.05);
+            color: #e0e0e0;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            font-family: inherit;
+        }
+        .calc-grid button:active {
+            transform: scale(0.94);
+        }
+        .calc-grid button:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        .calc-grid .op {
+            background: rgba(168, 85, 247, 0.15);
+            color: #a855f7;
+        }
+        .calc-grid .eq {
+            background: linear-gradient(135deg, #ff6ba0, #a855f7);
+            color: #fff;
+            border: none;
+        }
+        .calc-grid .eq:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(168, 85, 247, 0.3);
+        }
+        .calc-grid .clr {
+            background: rgba(239, 68, 68, 0.15);
+            color: #ef4444;
+        }
+
+        /* RING & TRACK */
+        .rt-container {
+            max-width: 420px;
+            margin: 0 auto;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+        }
+        .rt-ring-wrapper {
+            position: relative;
+            width: 150px;
+            height: 150px;
+        }
+        .rt-ring-wrapper svg {
+            width: 150px;
+            height: 150px;
+            transform: rotate(-90deg);
+        }
+        .rt-ring-track {
+            fill: none;
+            stroke: rgba(255, 255, 255, 0.06);
+            stroke-width: 8;
+        }
+        .rt-ring-fill {
+            fill: none;
+            stroke: url(#rtRingGrad);
+            stroke-width: 8;
+            stroke-linecap: round;
+            stroke-dasharray: 427;
+            stroke-dashoffset: 427;
+            transition: stroke-dashoffset 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        .rt-ring-center {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .rt-progress-text {
+            font-size: 32px;
+            font-weight: 900;
+            background: linear-gradient(135deg, #ff6ba0, #a855f7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .rt-progress-label {
+            font-size: 11px;
+            color: #888;
+            font-weight: 600;
+        }
+        .rt-rig-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            width: 100%;
+        }
+        .rt-rig {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .rt-canopy {
+            width: 50px;
+            height: 24px;
+            background: linear-gradient(135deg, rgba(168, 85, 247, 0.2), rgba(255, 107, 160, 0.15));
+            border-radius: 50% 50% 0 0;
+            border: 2px solid rgba(168, 85, 247, 0.15);
+            position: relative;
+            transition: all 0.6s ease;
+        }
+        .rt-canopy::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 16px;
+            background: rgba(168, 85, 247, 0.15);
+        }
+        .rt-arrow {
+            width: 0;
+            height: 0;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-top: 14px solid #a855f7;
+            transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            opacity: 0.4;
+        }
+        .rt-check {
+            font-size: 22px;
+            color: #4ade80;
+            opacity: 0;
+            transform: scale(0.5);
+            transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .rt-rig.active .rt-arrow {
+            transform: translateY(-8px);
+            opacity: 1;
+            border-top-color: #ff6ba0;
+        }
+        .rt-rig.done .rt-canopy {
+            border-color: #4ade80;
+            background: linear-gradient(135deg, rgba(74, 222, 128, 0.15), rgba(34, 197, 94, 0.08));
+        }
+        .rt-rig.done .rt-arrow {
+            opacity: 0;
+            transform: scale(0);
+        }
+        .rt-rig.done .rt-check {
+            opacity: 1;
+            transform: scale(1);
+        }
+        .rt-rig-label {
+            font-size: 11px;
+            color: #888;
+            font-weight: 500;
+        }
+        .rt-progress-bar {
+            width: 100%;
+        }
+        .rt-bar-track {
+            width: 100%;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .rt-bar-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #ff6ba0, #a855f7);
+            border-radius: 10px;
+            transition: width 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        .rt-bar-label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: #a0a0c0;
+            margin-top: 3px;
+        }
+        .rt-bar-label span:last-child {
+            color: #ff6ba0;
+            font-weight: 600;
+        }
+        .rt-btn {
+            padding: 12px 32px;
+            background: linear-gradient(135deg, #ff6ba0, #a855f7);
+            border: none;
+            border-radius: 9999px;
+            color: #fff;
+            font-weight: 700;
+            font-size: 14px;
+            cursor: pointer;
+            transition: 0.3s ease;
+            font-family: inherit;
+            box-shadow: 0 4px 20px rgba(168, 85, 247, 0.3);
+            margin-top: 4px;
+        }
+        .rt-btn:hover:not(:disabled) {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(168, 85, 247, 0.5);
+        }
+        .rt-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            padding: 14px 24px;
+            border-radius: 12px;
+            color: #fff;
+            font-weight: 600;
+            z-index: 999;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.4s ease;
+            pointer-events: none;
+            max-width: 350px;
+        }
+        .toast.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .toast.success {
+            background: #22c55e;
+        }
+        .toast.error {
+            background: #ef4444;
+        }
+        .toast.info {
+            background: #3b82f6;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+        <!-- KALKULATOR -->
+        <div class="section">
+            <h2 class="section-title">🧮 Kalkulator</h2>
+            <p class="section-desc">Klik tombol atau gunakan keyboard.</p>
+
+            <div class="calc-display">
+                <div class="expr" id="calcExpr"></div>
+                <div class="result" id="calcResult">0</div>
+            </div>
+            <div class="calc-grid">
+                <button class="clr" onclick="calcClear()">AC</button>
+                <button onclick="calcDelete()">⌫</button>
+                <button class="op" onclick="calcOp('%')">%</button>
+                <button class="op" onclick="calcOp('/')">÷</button>
+                <button onclick="calcNum('7')">7</button>
+                <button onclick="calcNum('8')">8</button>
+                <button onclick="calcNum('9')">9</button>
+                <button class="op" onclick="calcOp('*')">×</button>
+                <button onclick="calcNum('4')">4</button>
+                <button onclick="calcNum('5')">5</button>
+                <button onclick="calcNum('6')">6</button>
+                <button class="op" onclick="calcOp('-')">−</button>
+                <button onclick="calcNum('1')">1</button>
+                <button onclick="calcNum('2')">2</button>
+                <button onclick="calcNum('3')">3</button>
+                <button class="op" onclick="calcOp('+')">+</button>
+                <button onclick="calcNum('0')" style="grid-column:span 2;">0</button>
+                <button onclick="calcDecimal()">.</button>
+                <button class="eq" onclick="calcResult()">=</button>
+            </div>
+        </div>
+
+        <!-- RING & TRACK -->
+        <div class="section">
+            <h2 class="section-title">🔄 Ring & Track</h2>
+            <p class="section-desc">Animasi progress ring dengan payload.</p>
+
+            <div class="rt-container">
+                <div class="rt-ring-wrapper">
+                    <svg viewBox="0 0 160 160">
+                        <defs>
+                            <linearGradient id="rtRingGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#ff6ba0"/>
+                                <stop offset="100%" stop-color="#a855f7"/>
+                            </linearGradient>
+                        </defs>
+                        <circle class="rt-ring-track" cx="80" cy="80" r="68"/>
+                        <circle class="rt-ring-fill" id="rtRingFill" cx="80" cy="80" r="68"/>
+                    </svg>
+                    <div class="rt-ring-center">
+                        <span class="rt-progress-text" id="rtProgressText">0%</span>
+                        <span class="rt-progress-label">Progress</span>
+                    </div>
+                </div>
+
+                <div class="rt-rig-container">
+                    <div class="rt-rig" id="rtRig1">
+                        <div class="rt-canopy"></div>
+                        <div class="rt-arrow"></div>
+                        <div class="rt-check">✅</div>
+                        <span class="rt-rig-label">Payload 1</span>
+                    </div>
+                    <div class="rt-rig" id="rtRig2">
+                        <div class="rt-canopy"></div>
+                        <div class="rt-arrow"></div>
+                        <div class="rt-check">✅</div>
+                        <span class="rt-rig-label">Payload 2</span>
+                    </div>
+                    <div class="rt-rig" id="rtRig3">
+                        <div class="rt-canopy"></div>
+                        <div class="rt-arrow"></div>
+                        <div class="rt-check">✅</div>
+                        <span class="rt-rig-label">Payload 3</span>
+                    </div>
+                </div>
+
+                <div class="rt-progress-bar">
+                    <div class="rt-bar-track"><div class="rt-bar-fill" id="rtBarFill"></div></div>
+                    <div class="rt-bar-label"><span>Loading</span><span id="rtBarText">0%</span></div>
+                </div>
+
+                <button class="rt-btn" id="rtBtn" onclick="startRing()">🚀 Mulai Animasi</button>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <script>
+        // ================================================================
+        // TOAST
+        // ================================================================
+        function showToast(msg, type) {
+            if (!type) type = 'info';
+            var t = document.getElementById('toast');
+            t.textContent = msg;
+            t.className = 'toast ' + type + ' show';
+            clearTimeout(t._timeout);
+            t._timeout = setTimeout(function() { t.classList.remove('show'); }, 3000);
+        }
+
+        // ================================================================
+        // KALKULATOR - PERBAIKAN TOTAL
+        // ================================================================
+        var display = document.getElementById('calcResult');
+        var exprDisplay = document.getElementById('calcExpr');
+
+        var currentInput = '0';
+        var previousInput = '';
+        var operation = '';
+        var shouldReset = false;
+
+        function updateDisplay() {
+            var val = currentInput;
+            if (!isNaN(val) && val !== 'Error') {
+                var n = parseFloat(val);
+                val = Number.isInteger(n) ? n.toLocaleString('id-ID') : n.toLocaleString('id-ID', { minimumFractionDigits: 2 });
+            }
+            display.textContent = val;
+            display.classList.remove('error');
+            if (currentInput === 'Error') {
+                display.classList.add('error');
+                display.textContent = 'Error';
+            }
+
+            if (operation && previousInput) {
+                var s = operation;
+                if (s === '*') s = '×';
+                if (s === '/') s = '÷';
+                exprDisplay.textContent = Number(previousInput).toLocaleString('id-ID') + ' ' + s;
+            } else {
+                exprDisplay.textContent = '';
+            }
+        }
+
+        function calcNum(num) {
+            if (currentInput === 'Error') {
+                calcClear();
+                return;
+            }
+            if (shouldReset) {
+                currentInput = num;
+                shouldReset = false;
+            } else {
+                if (currentInput.length >= 15) return;
+                currentInput = currentInput === '0' ? num : currentInput + num;
+            }
+            updateDisplay();
+        }
+
+        function calcDecimal() {
+            if (currentInput === 'Error') {
+                calcClear();
+                return;
+            }
+            if (shouldReset) {
+                currentInput = '0.';
+                shouldReset = false;
+                updateDisplay();
+                return;
+            }
+            if (currentInput.indexOf('.') === -1) {
+                currentInput += '.';
+            }
+            updateDisplay();
+        }
+
+        function calcOp(op) {
+            if (currentInput === 'Error') return;
+            if (operation && !shouldReset) {
+                calcResult();
+            }
+            previousInput = currentInput;
+            operation = op;
+            shouldReset = true;
+            updateDisplay();
+        }
+
+        function calcResult() {
+            if (currentInput === 'Error') return;
+
+            var prev = parseFloat(previousInput);
+            var curr = parseFloat(currentInput);
+
+            if (isNaN(prev) || isNaN(curr)) {
+                if (operation) {
+                    currentInput = 'Error';
+                    updateDisplay();
+                }
+                return;
+            }
+
+            var result;
+            switch (operation) {
+                case '+':
+                    result = prev + curr;
+                    break;
+                case '-':
+                    result = prev - curr;
+                    break;
+                case '*':
+                    result = prev * curr;
+                    break;
+                case '/':
+                    if (curr === 0) {
+                        currentInput = 'Error';
+                        updateDisplay();
+                        return;
+                    }
+                    result = prev / curr;
+                    break;
+                case '%':
+                    result = (prev * curr) / 100;
+                    break;
+                default:
+                    // Jika tidak ada operator, tampilkan angka saja
+                    if (!operation) {
+                        // Coba parse expression
+                        try {
+                            var parsed = parseFloat(currentInput);
+                            if (!isNaN(parsed)) {
+                                currentInput = String(parsed);
+                                updateDisplay();
+                            }
+                        } catch (e) {}
+                        return;
+                    }
+                    return;
+            }
+
+            if (result % 1 !== 0) {
+                result = parseFloat(result.toPrecision(12));
+            }
+
+            // Tampilkan ekspresi
+            var s = operation;
+            if (s === '*') s = '×';
+            if (s === '/') s = '÷';
+            exprDisplay.textContent = Number(previousInput).toLocaleString('id-ID') + ' ' + s + ' ' + Number(currentInput)
+                .toLocaleString('id-ID') + ' =';
+
+            currentInput = String(result);
+            operation = '';
+            previousInput = '';
+            shouldReset = true;
+            updateDisplay();
+        }
+
+        function calcClear() {
+            currentInput = '0';
+            previousInput = '';
+            operation = '';
+            shouldReset = false;
+            updateDisplay();
+        }
+
+        function calcDelete() {
+            if (currentInput === 'Error') {
+                calcClear();
+                return;
+            }
+            if (currentInput.length > 1) {
+                currentInput = currentInput.slice(0, -1);
+            } else {
+                currentInput = '0';
+            }
+            updateDisplay();
+        }
+
+        // ================================================================
+        // KEYBOARD SUPPORT
+        // ================================================================
+        document.addEventListener('keydown', function(e) {
+            var k = e.key;
+
+            if (k >= '0' && k <= '9') {
+                e.preventDefault();
+                calcNum(k);
+            } else if (k === '.') {
+                e.preventDefault();
+                calcDecimal();
+            } else if (k === '+') {
+                e.preventDefault();
+                calcOp('+');
+            } else if (k === '-') {
+                e.preventDefault();
+                calcOp('-');
+            } else if (k === '*') {
+                e.preventDefault();
+                calcOp('*');
+            } else if (k === '/') {
+                e.preventDefault();
+                calcOp('/');
+            } else if (k === '%') {
+                e.preventDefault();
+                calcOp('%');
+            } else if (k === 'Enter' || k === '=') {
+                e.preventDefault();
+                calcResult();
+            } else if (k === 'Backspace') {
+                e.preventDefault();
+                calcDelete();
+            } else if (k === 'Escape') {
+                e.preventDefault();
+                calcClear();
+            }
+        });
+
+        // ================================================================
+        // RING & TRACK
+        // ================================================================
+        var ringAnimating = false;
+
+        function startRing() {
+            if (ringAnimating) return;
+            ringAnimating = true;
+
+            var btn = document.getElementById('rtBtn');
+            btn.disabled = true;
+            btn.textContent = '⏳ Running...';
+
+            var total = 100;
+            var step = 0;
+            var duration = 3000;
+            var interval = duration / total;
+
+            var rigs = [
+                document.getElementById('rtRig1'),
+                document.getElementById('rtRig2'),
+                document.getElementById('rtRig3')
+            ];
+
+            var ring = document.getElementById('rtRingFill');
+            var circ = 2 * Math.PI * 68;
+
+            // Reset semua
+            ring.style.strokeDasharray = circ + ' ' + circ;
+            ring.style.strokeDashoffset = circ;
+            document.getElementById('rtProgressText').textContent = '0%';
+            document.getElementById('rtBarFill').style.width = '0%';
+            document.getElementById('rtBarText').textContent = '0%';
+            document.querySelectorAll('.rt-rig').forEach(function(r) {
+                r.classList.remove('active', 'done');
+            });
+
+            var rigIdx = 0;
+            var anim = setInterval(function() {
+                step++;
+                var progress = step / total;
+
+                ring.style.strokeDashoffset = circ - (progress * circ);
+                document.getElementById('rtProgressText').textContent = Math.round(progress * 100) + '%';
+                document.getElementById('rtBarFill').style.width = (progress * 100) + '%';
+                document.getElementById('rtBarText').textContent = Math.round(progress * 100) + '%';
+
+                var p = step / total;
+                if (p > 0.1 && rigIdx === 0) {
+                    rigs[0].classList.add('active');
+                    rigIdx++;
+                }
+                if (p > 0.35 && rigIdx === 1) {
+                    rigs[1].classList.add('active');
+                    rigIdx++;
+                }
+                if (p > 0.65 && rigIdx === 2) {
+                    rigs[2].classList.add('active');
+                    rigIdx++;
+                }
+
+                if (step >= total) {
+                    clearInterval(anim);
+                    rigs.forEach(function(r) {
+                        r.classList.remove('active');
+                        r.classList.add('done');
+                    });
+                    btn.textContent = '✅ Selesai!';
+                    btn.disabled = false;
+                    ringAnimating = false;
+                    showToast('🎉 Animasi selesai!', 'success');
+                }
+            }, interval);
+
+            setTimeout(function() {
+                if (ringAnimating) {
+                    clearInterval(anim);
+                    btn.textContent = '🔄 Ulangi';
+                    btn.disabled = false;
+                    ringAnimating = false;
+                }
+            }, duration + 1000);
+        }
+
+        // Init ring on load
+        (function() {
+            var ring = document.getElementById('rtRingFill');
+            var circ = 2 * Math.PI * 68;
+            ring.style.strokeDasharray = circ + ' ' + circ;
+            ring.style.strokeDashoffset = circ;
+        })();
+    </script>
+
+</body>
+</html>
